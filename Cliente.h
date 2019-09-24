@@ -2,7 +2,7 @@
  * Cliente.h
  *
  *  Created on: 22 de set de 2019
- *      Author: rafaelamoreira
+ *      Author: rafaelamoreir
  */
 
 #ifndef CLIENTE_H_
