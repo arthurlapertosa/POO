@@ -22,8 +22,9 @@ private:
 
 public:
 	Movimentacao(std::string descricao, char debitoCredito, double valor);
+	Movimentacao(time_t dataMov, std::string descricao, char debitoCredito, double valor);
 	virtual ~Movimentacao();
-	Movimentacao(const Movimentacao &other);
+	//Movimentacao(const Movimentacao &other);
 
 	time_t getDataMov() const;
 	char getDebitoCredito() const;

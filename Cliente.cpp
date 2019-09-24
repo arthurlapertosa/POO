@@ -14,14 +14,18 @@ Cliente::Cliente(std::string nomeCliente, std::string cpf_cnpj, std::string ende
 	this->fone = fone;
 }
 
+Cliente::Cliente() {
+
+}
+
 Cliente::~Cliente() {
 	// TODO Auto-generated destructor stub
 }
 
-Cliente::Cliente(const Cliente &other) {
-	// TODO Auto-generated constructor stub
-
-}
+//Cliente::Cliente(const Cliente &other) {
+//	// TODO Auto-generated constructor stub
+//
+//}
 
 const std::string& Cliente::getCpfCnpj() const {
 	return cpf_cnpj;
