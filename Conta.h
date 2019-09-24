@@ -12,8 +12,6 @@
 #include "Movimentacao.h"
 #include <vector>
 
-using namespace std;
-
 class Conta {
 private:
 	int numConta;
@@ -21,17 +19,26 @@ private:
 	Cliente cliente;
 	std::vector<Movimentacao> movimentacoes;
 	static int proximoNumConta;
-
 public:
-	Conta(Cliente cliente);
-	virtual ~Conta();
-	Conta(const Conta &other);
+	//constructors
+	Conta(Cliente &cliente);
 
+	virtual ~Conta();
+	//Conta(const Conta &other);
+
+	//getters and setters
 	const Cliente& getCliente() const;
-	const std::vector<Movimentacao>& getMovimentacoes() const;
+	const std::vector<Movimentacao> getMovimentacoes();
 	int getNumConta() const;
-	static int getProximoNumConta() const;
+	//static int getProximoNumConta();
 	double getSaldo() const;
+
+	//methods
+	bool debitar(double valor, std::string descricao);
+	bool creditar(double valor, std::string descricao);
+	vector<Movimentacao> obterExtrato(std::string dataIni, std::string dataFim);
+	vector<Movimentacao> obterExtrato(std::string dataIni);
+	vector<Movimentacao> obterExtratoMesAtual();
 };
 
 #endif /* CONTA_H_ */

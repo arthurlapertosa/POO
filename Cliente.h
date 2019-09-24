@@ -20,10 +20,13 @@ private:
 	std::string endereco;
 	std::string fone;
 public:
+	//constructors
 	Cliente(std::string nomeCliente, std::string cpf_cnpj, std::string endereco, std::string fone);
+	Cliente();
 	virtual ~Cliente();
-	Cliente(const Cliente &other);
+	//Cliente(const Cliente &other);
 
+	//getters and setters
 	const std::string& getCpfCnpj() const;
 	void setCpfCnpj(const std::string &cpfCnpj);
 	const std::string& getEndereco() const;
@@ -32,6 +35,7 @@ public:
 	void setFone(const std::string &fone);
 	const std::string& getNomeCliente() const;
 	void setNomeCliente(const std::string &nomeCliente);
+
 };
 
 #endif /* CLIENTE_H_ */

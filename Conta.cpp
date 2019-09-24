@@ -6,29 +6,29 @@
  */
 
 #include "Conta.h"
+#include "Cliente.h"
+#include <ctime>
 
-Conta::Conta(Cliente cliente) {
-	this->cliente = cliente;
-	this->numConta = proximoNumConta;
-	this->proximoNumConta = this->proximoNumConta++;
+Conta::Conta(Cliente & cliente) {
 	this->saldo = 0.0;
+	this->cliente = cliente;
+	this->numConta = 1;
+//	this->proximoNumConta++;
+
+
 }
 
 Conta::~Conta() {
 	// TODO Auto-generated destructor stub
 }
 
-Conta::Conta(const Conta &other) {
-	// TODO Auto-generated constructor stub
-
-}
-
+//getters and setters
 
 const Cliente& Conta::getCliente() const {
 	return cliente;
 }
 
-const std::vector<Movimentacao>& Conta::getMovimentacoes() const {
+const std::vector<Movimentacao> Conta::getMovimentacoes() {
 	return movimentacoes;
 }
 
@@ -36,12 +36,124 @@ int Conta::getNumConta() const {
 	return numConta;
 }
 
-static int Conta::getProximoNumConta() const {
-	return proximoNumConta;
-}
-
 double Conta::getSaldo() const {
 	return saldo;
 }
 
+//methods
+
+bool Conta::debitar(double valor, std::string descricao) {
+	char debitoCredito = 'D';
+	Movimentacao * mov = new Movimentacao(descricao, debitoCredito, valor);
+
+	if (valor >= this->saldo) {
+		this->saldo = this->saldo - valor;
+		this->movimentacoes.push_back(* mov);
+
+		delete mov;
+
+		return true;
+	} else {
+		return false;
+	}
+
+}
+
+bool Conta::creditar(double valor, std::string descricao){
+	char debitoCredito = 'C';
+	Movimentacao * mov = new Movimentacao(descricao, debitoCredito, valor);
+
+
+	this->saldo = this->saldo + valor;
+	this->movimentacoes.push_back(* mov);
+
+	delete mov;
+
+	return true;
+}
+
+
+vector<Movimentacao> Conta::obterExtrato(std::string dataIni, std::string dataFim) {
+	time_t seconds;
+	tm * curr_tm;
+	char date_string[10];
+
+	vector<Movimentacao> * extrato = new vector<Movimentacao>;
+	for(std::size_t i=0; i< this->getMovimentacoes().size(); ++i) {
+
+		//convert time_t to string
+		seconds = this->getMovimentacoes()[i].getDataMov();
+		time(&seconds);
+		curr_tm = localtime(&seconds);
+		strftime(date_string, 50, "%d/%m/%Y", curr_tm);
+		std::string s(date_string);
+
+		//date compare
+		if(s >= dataIni) {
+			if (s <= dataFim) {
+				Movimentacao *mov = new Movimentacao( this->getMovimentacoes()[i].getDataMov(), this->getMovimentacoes()[i].getDescricao(), this->getMovimentacoes()[i].getDebitoCredito(), this->getMovimentacoes()[i].getValor());
+				extrato->push_back(*mov);
+			}
+		}
+	}
+
+	return *extrato;
+}
+
+vector<Movimentacao> Conta::obterExtrato(std::string dataIni) {
+	time_t seconds;
+	tm * curr_tm;
+	char date_string[10];
+
+	vector<Movimentacao> * extrato = new vector<Movimentacao>;
+	for(std::size_t i=0; i< this->getMovimentacoes().size(); ++i) {
+
+		//convert time_t to string
+		seconds = this->getMovimentacoes()[i].getDataMov();
+		time(&seconds);
+		curr_tm = localtime(&seconds);
+		strftime(date_string, 50, "%d/%m/%Y", curr_tm);
+		std::string s(date_string);
+
+		//date compare
+		if(s >= dataIni) {
+			Movimentacao *mov = new Movimentacao( this->getMovimentacoes()[i].getDataMov(), this->getMovimentacoes()[i].getDescricao(), this->getMovimentacoes()[i].getDebitoCredito(), this->getMovimentacoes()[i].getValor());
+			extrato->push_back(*mov);
+		}
+	}
+
+	return *extrato;
+}
+
+vector<Movimentacao> Conta::obterExtratoMesAtual() {
+	char date_string[10];
+	time_t seconds = time(0);
+	tm * curr_tm;
+	time(&seconds);
+
+	//find current month
+	curr_tm = localtime(&seconds);
+	strftime(date_string, 50, "%m", curr_tm);
+	std::string mesAtual(date_string);
+
+	vector<Movimentacao> * extrato = new vector<Movimentacao>;
+	for(std::size_t i=0; i< this->getMovimentacoes().size(); ++i) {
+
+		//convert time_t to string
+		seconds = this->getMovimentacoes()[i].getDataMov();
+		time(&seconds);
+		curr_tm = localtime(&seconds);
+		strftime(date_string, 50, "%m", curr_tm);
+		std::string mes(date_string);
+
+		//date compare
+		if(mesAtual == mes) {
+			Movimentacao *mov = new Movimentacao( this->getMovimentacoes()[i].getDataMov(), this->getMovimentacoes()[i].getDescricao(), this->getMovimentacoes()[i].getDebitoCredito(), this->getMovimentacoes()[i].getValor());
+			extrato->push_back(*mov);
+
+		}
+	}
+
+	return *extrato;
+}
 

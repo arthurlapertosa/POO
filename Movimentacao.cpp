@@ -15,14 +15,22 @@ Movimentacao::Movimentacao(std::string descricao, char debitoCredito, double val
 
 }
 
+Movimentacao::Movimentacao(time_t dataMov, std::string descricao, char debitoCredito, double valor) {
+	this->descricao = descricao;
+	this->debitoCredito = debitoCredito;
+	this->valor = valor;
+	this->dataMov = dataMov;
+
+}
+
 Movimentacao::~Movimentacao() {
 	// TODO Auto-generated destructor stub
 }
 
-Movimentacao::Movimentacao(const Movimentacao &other) {
-	// TODO Auto-generated constructor stub
-
-}
+//Movimentacao::Movimentacao(const Movimentacao &other) {
+//	// TODO Auto-generated constructor stub
+//
+//}
 
 
 time_t Movimentacao::getDataMov() const {
