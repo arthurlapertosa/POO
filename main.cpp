@@ -12,7 +12,13 @@
 int main(int argc, char* argv[]){
 
 	Cliente *cli = new Cliente("Rafa", "123", "BH", "123123");
-	Conta *conta = new Conta(*cli); // @suppress("Ambiguous problem")
+	Conta *conta = new Conta(*cli);
+	Conta *conta2 = new Conta(*cli);
+	Conta *conta3 = new Conta(*cli);
+
+	cout << conta->getNumConta() << endl;
+	cout << conta2->getNumConta() << endl;
+	cout << conta3->getNumConta() << endl;
 
 
 	conta->creditar(900.0, "Salario");
@@ -22,11 +28,13 @@ int main(int argc, char* argv[]){
 	vector<Movimentacao> extrato = conta->obterExtratoMesAtual();
 
 	for(std::size_t i=0; i< extrato.size(); ++i) {
-		cout << extrato[i].getDataMov() << endl;
+		cout << extrato[i].getValor() << " " << extrato[i].getDebitoCredito() << " " << extrato[i].getDataMov() << endl;
 	}
 
-	delete(conta);
-	delete(cli);
+	delete conta;
+	delete conta2;
+	delete conta3;
+	delete cli;
 
 	return 0;
 }

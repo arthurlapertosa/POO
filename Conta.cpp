@@ -9,11 +9,13 @@
 #include "Cliente.h"
 #include <ctime>
 
-Conta::Conta(Cliente & cliente) {
+int Conta::proximoNumConta;
+
+Conta::Conta(Cliente cliente) {
 	this->saldo = 0.0;
 	this->cliente = cliente;
-	this->numConta = 1;
-//	this->proximoNumConta++;
+	this->numConta = Conta::proximoNumConta;
+	Conta::proximoNumConta++;
 
 
 }
@@ -119,22 +121,26 @@ vector<Movimentacao> Conta::obterExtrato(std::string dataIni) {
 		if(s >= dataIni) {
 			Movimentacao *mov = new Movimentacao( this->getMovimentacoes()[i].getDataMov(), this->getMovimentacoes()[i].getDescricao(), this->getMovimentacoes()[i].getDebitoCredito(), this->getMovimentacoes()[i].getValor());
 			extrato->push_back(*mov);
+			delete(mov);
 		}
 	}
 
+	delete curr_tm;
 	return *extrato;
 }
 
 vector<Movimentacao> Conta::obterExtratoMesAtual() {
-	char date_string[10];
-	time_t seconds = time(0);
+	time_t seconds;
 	tm * curr_tm;
-	time(&seconds);
+	char date_string[10];
+
 
 	//find current month
+	time(&seconds);
 	curr_tm = localtime(&seconds);
 	strftime(date_string, 50, "%m", curr_tm);
 	std::string mesAtual(date_string);
+
 
 	vector<Movimentacao> * extrato = new vector<Movimentacao>;
 	for(std::size_t i=0; i< this->getMovimentacoes().size(); ++i) {
@@ -150,6 +156,7 @@ vector<Movimentacao> Conta::obterExtratoMesAtual() {
 		if(mesAtual == mes) {
 			Movimentacao *mov = new Movimentacao( this->getMovimentacoes()[i].getDataMov(), this->getMovimentacoes()[i].getDescricao(), this->getMovimentacoes()[i].getDebitoCredito(), this->getMovimentacoes()[i].getValor());
 			extrato->push_back(*mov);
+			delete(mov);
 
 		}
 	}

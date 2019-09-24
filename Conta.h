@@ -21,7 +21,7 @@ private:
 	static int proximoNumConta;
 public:
 	//constructors
-	Conta(Cliente &cliente);
+	Conta(Cliente cliente);
 
 	virtual ~Conta();
 	//Conta(const Conta &other);
