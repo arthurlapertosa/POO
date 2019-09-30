@@ -26,6 +26,18 @@ public:
 	//Deleta um cliente PRECONDIÇÃO: Cliente não possui conta
 	void deletaCliente(std::string cpf);
 
+	//Printa a lista de clientes
+	void printClientes();
+
+	//Printa a lista de contas
+	void printContas();
+
+	//Exclui uma conta
+	void deleteConta(int numConta);
+
+	//Faz um depósito em uma conta
+	void depositoConta(int numConta, double valor);
+
 	//Obtem a lista de clientes
 	std::vector<Cliente> ClientesLista();
 
