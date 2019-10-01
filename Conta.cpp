@@ -48,7 +48,7 @@ bool Conta::debitar(double valor, std::string descricao) {
 	char debitoCredito = 'D';
 	Movimentacao * mov = new Movimentacao(descricao, debitoCredito, valor);
 
-	if (valor >= this->saldo) {
+	if (valor <= this->saldo) {
 		this->saldo = this->saldo - valor;
 		this->movimentacoes.push_back(* mov);
 
