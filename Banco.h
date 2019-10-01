@@ -34,8 +34,18 @@ public:
 	//Exclui uma conta
 	void deleteConta(int numConta);
 
-	//Faz um dep�sito em uma conta
+	//Faz um deposito em uma conta
 	void depositoConta(int numConta, double valor);
+
+	//Faz um saque em uma conta
+	bool saqueConta(int numConta, double valor);
+
+	//Faz uma transferência entre contas
+	bool transferencia(int numContaOrigem, int numContaDestino, double valor);
+
+	void cobrarTarifa();
+
+	void cobrarCPMF();
 
 	//Obtem a lista de clientes
 	std::vector<Cliente> ClientesLista();

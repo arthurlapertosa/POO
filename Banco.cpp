@@ -70,6 +70,51 @@ void Banco::depositoConta(int numConta, double valor) {
 	}
 }
 
+bool Banco::saqueConta(int numConta, double valor) {
+	bool saqueRealizado = false;
+	//Passa por todas as contas
+	for (int i = 0; i < Contas.size(); i++) {
+		if (Contas[i].getNumConta() == numConta) { //Achou a conta
+			if (Contas[i].debitar(valor, "Saque")) {
+				saqueRealizado = true;
+			}
+			break;
+		}
+	}
+	return saqueRealizado;
+}
+
+
+bool Banco::transferencia(int numContaOrigem, int numContaDestino, double valor) {
+	bool transferenciaRealizada = false;
+	for (int i = 0; i < Contas.size(); i++) {
+		if (Contas[i].getNumConta() == numContaOrigem) { //Achou a conta
+			for (int j = 0; j < Contas.size(); i++) {
+				if (Contas[j].getNumConta() == numContaDestino) {
+
+					if (Contas[i].debitar(valor, "Transferencia (Origem)")) {
+						Contas[j].creditar(valor, "Transferencia (Destino)");
+						transferenciaRealizada = true;
+					}
+					break;
+
+				}
+			}
+			break;
+		}
+	}
+
+	return transferenciaRealizada;
+}
+
+void Banco::cobrarTarifa() {
+
+}
+
+void Banco::cobrarCPMF() {
+
+}
+
 std::vector<Cliente> Banco::ClientesLista() {
 	return Clientes;
 }
