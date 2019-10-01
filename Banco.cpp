@@ -86,10 +86,12 @@ bool Banco::saqueConta(int numConta, double valor) {
 
 
 bool Banco::transferencia(int numContaOrigem, int numContaDestino, double valor) {
+
+
 	bool transferenciaRealizada = false;
 	for (int i = 0; i < contas.size(); i++) {
 		if (contas[i].getNumConta() == numContaOrigem) { //Achou a conta
-			for (int j = 0; j < contas.size(); i++) {
+			for (int j = 0; j < contas.size(); j++) {
 				if (contas[j].getNumConta() == numContaDestino) {
 					if (contas[i].debitar(valor, "Transferencia (Origem)")) {
 						contas[j].creditar(valor, "Transferencia (Destino)");
@@ -108,13 +110,15 @@ bool Banco::transferencia(int numContaOrigem, int numContaDestino, double valor)
 
 void Banco::cobrarTarifa() {
 	for (int i = 0; i < contas.size(); i++) {
-		contas[i] = contas[i] - 15.00;
+		contas[i].debitar(15.0, "Tarifa");
 	}
 }
 
 void Banco::cobrarCPMF() {
 	for (int i = 0; i < contas.size(); i++) {
-			contas[i] = contas[i] - (contas[i]*0.038);
+
+			contas[i].debitar(15.0, "Tarifa");
+			contas[i].debitar(contas[i].getSaldo()*0.038, "Tarifa");
 		}
 }
 
