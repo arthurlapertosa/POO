@@ -3,8 +3,7 @@
 #include "Cliente.h"
 #include "Conta.h"
 
-class Banco
-{
+class Banco {
 private:
 	std::string nomeBanco;
 	std::vector<Cliente> Clientes;
@@ -23,7 +22,7 @@ public:
 	//Checa se o cliente tem alguma conta
 	bool possuiConta(std::string cpf);
 
-	//Deleta um cliente PRECONDIÇÃO: Cliente não possui conta
+	//Deleta um cliente PRECONDIï¿½ï¿½O: Cliente nï¿½o possui conta
 	void deletaCliente(std::string cpf);
 
 	//Printa a lista de clientes
@@ -35,7 +34,7 @@ public:
 	//Exclui uma conta
 	void deleteConta(int numConta);
 
-	//Faz um depósito em uma conta
+	//Faz um depï¿½sito em uma conta
 	void depositoConta(int numConta, double valor);
 
 	//Obtem a lista de clientes

@@ -7,18 +7,21 @@ CPP_SRCS += \
 ../Cliente.cpp \
 ../Conta.cpp \
 ../Movimentacao.cpp \
+../banco.cpp \
 ../main.cpp 
 
 OBJS += \
 ./Cliente.o \
 ./Conta.o \
 ./Movimentacao.o \
+./banco.o \
 ./main.o 
 
 CPP_DEPS += \
 ./Cliente.d \
 ./Conta.d \
 ./Movimentacao.d \
+./banco.d \
 ./main.d 
 
 
