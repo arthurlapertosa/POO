@@ -8,33 +8,32 @@
 #include "Cliente.h"
 #include "Movimentacao.h"
 #include "Conta.h"
+#include "banco.h"
 
 int main(int argc, char* argv[]){
 
-	Cliente *cli = new Cliente("Rafa", "123", "BH", "123123");
-	Conta *conta = new Conta(*cli);
-	Conta *conta2 = new Conta(*cli);
-	Conta *conta3 = new Conta(*cli);
+	Banco Itau("Itau");
+	Cliente* cli = new Cliente("Rafa", "123", "BH", "123123");
+	Itau.adicionaCliente(*cli);
+	Itau.adicionaCliente(Cliente("Arthur", "06149", "BH", "10000"));
 
-	cout << conta->getNumConta() << endl;
-	cout << conta2->getNumConta() << endl;
-	cout << conta3->getNumConta() << endl;
+	Itau.criarConta(Cliente("Arthur", "06149", "BH", "10000"));
+	Itau.criarConta(Cliente("Arthur", "06149", "BH", "10000"));
+	Itau.criarConta(*new Cliente("Rafa", "123", "BH", "123123"));
 
+	Itau.depositoConta(1, 350.0);
 
-	conta->creditar(900.0, "Salario");
-	conta->creditar(500.0, "Salario");
-	conta->creditar(200.0, "Salario");
+	Itau.printClientes();
+	Itau.printContas();
 
-	vector<Movimentacao> extrato = conta->obterExtratoMesAtual();
+	std::cout << std::endl;
+	
+	Itau.deleteConta(2);// deleta a conta 2
+	Itau.deletaCliente("123"); //deleta, pois não tem conta associada
+	Itau.deletaCliente("06149"); //Não deleta, pois tem conta associada
 
-	for(std::size_t i=0; i< extrato.size(); ++i) {
-		cout << extrato[i].getValor() << " " << extrato[i].getDebitoCredito() << " " << extrato[i].getDataMov() << endl;
-	}
-
-	delete conta;
-	delete conta2;
-	delete conta3;
-	delete cli;
+	Itau.printClientes();
+	Itau.printContas();
 
 	return 0;
 }
