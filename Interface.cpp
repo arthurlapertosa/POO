@@ -53,8 +53,15 @@ Interface::Menu(){
 
   }
 }
-void Interface::cadastraCliente{
-
+void Interface::cadastraCliente(Cliente &obj){
+ std::cout<<"Insira o nome do Cliente"<<
+ std::cin>>obj.nomeCliente;
+ std::cout<<"Insira o CPF do Cliente"<<
+ std::cin>>obj.cpf_cnpj;
+ std::cout<<"Insira o endereço do Cliente"<<
+ std::cin>>obj.endereco;
+ std::cout<<"Insira o telefone do Cliente"<<
+ std::cin>>obj.fone;
 }
 void Interface::criaConta{
 
@@ -72,7 +79,7 @@ void Interface::cadastraCliente{
 
 }
 void Interface::efetuaDeposito{
-  
+
 }
 void Interface::efetuaTransferencia{
 
