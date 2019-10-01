@@ -11,6 +11,17 @@
 class Interface {
 public:
 	Interface();
+	void Menu();
+	void cadastraCliente();
+	void criaConta();
+	void excluiCliente();
+	void excluiConta();
+	void efetuaSaque();
+	void efetuaDeposito();
+	void efetuaTransferencia();
+	void cobraTarifa();
+	void cobraCPMF();
+
 	virtual ~Interface();
 };
 
