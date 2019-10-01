@@ -4,24 +4,27 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
+../Banco.cpp \
 ../Cliente.cpp \
 ../Conta.cpp \
+../Interface.cpp \
 ../Movimentacao.cpp \
-../banco.cpp \
 ../main.cpp 
 
 OBJS += \
+./Banco.o \
 ./Cliente.o \
 ./Conta.o \
+./Interface.o \
 ./Movimentacao.o \
-./banco.o \
 ./main.o 
 
 CPP_DEPS += \
+./Banco.d \
 ./Cliente.d \
 ./Conta.d \
+./Interface.d \
 ./Movimentacao.d \
-./banco.d \
 ./main.d 
 
 

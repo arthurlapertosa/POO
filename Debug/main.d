@@ -1,9 +1,9 @@
-main.o: ../main.cpp ../Cliente.h ../Movimentacao.h ../Conta.h ../banco.h
+main.o: ../main.cpp ../Banco.h ../Cliente.h ../Conta.h ../Movimentacao.h
+
+../Banco.h:
 
 ../Cliente.h:
 
-../Movimentacao.h:
-
 ../Conta.h:
 
-../banco.h:
+../Movimentacao.h:

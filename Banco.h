@@ -6,8 +6,8 @@
 class Banco {
 private:
 	std::string nomeBanco;
-	std::vector<Cliente> Clientes;
-	std::vector<Conta> Contas;
+	std::vector<Cliente> clientes;
+	std::vector<Conta> contas;
 
 public:
 	//Cria um banco com o nome "nomeB"
@@ -34,14 +34,24 @@ public:
 	//Exclui uma conta
 	void deleteConta(int numConta);
 
-	//Faz um dep�sito em uma conta
+	//Faz um deposito em uma conta
 	void depositoConta(int numConta, double valor);
 
+	//Faz um saque em uma conta
+	bool saqueConta(int numConta, double valor);
+
+	//Faz uma transferência entre contas
+	bool transferencia(int numContaOrigem, int numContaDestino, double valor);
+
+	void cobrarTarifa();
+
+	void cobrarCPMF();
+
 	//Obtem a lista de clientes
-	std::vector<Cliente> ClientesLista();
+	std::vector<Cliente> clientesLista();
 
 	//Obtem a lista de contas
-	std::vector<Conta> ContasLista();
+	std::vector<Conta> contasLista();
 };
 
 #endif // BANCO_H
