@@ -5,7 +5,7 @@
 #include <vector>
 #include <sstream>
 #include <ctime>
-
+#include "Interface.h"
 #include "Banco.h"
 #include "Cliente.h"
 #include "Movimentacao.h"
@@ -41,6 +41,10 @@ int main(int argc, char* argv[]){
 
 	Itau.printClientes();
 	Itau.printContas();
+
+	Interface *i = new Interface(*new Banco("Inter"));
+
+	i->menu();
 
 	return 0;
 }

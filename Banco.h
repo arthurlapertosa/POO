@@ -3,6 +3,8 @@
 #include "Cliente.h"
 #include "Conta.h"
 
+using namespace std;
+
 class Banco {
 private:
 	std::string nomeBanco;
@@ -11,6 +13,7 @@ private:
 
 public:
 	//Cria um banco com o nome "nomeB"
+	Banco();
 	Banco(std::string nomeB);
 
 	//Adiciona um nome cliente
