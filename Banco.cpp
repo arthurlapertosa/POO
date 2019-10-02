@@ -1,5 +1,9 @@
 #include "Banco.h"
 
+Banco::Banco() {
+
+}
+
 Banco::Banco(std::string nomeB) {
 	nomeBanco = nomeB;
 }
