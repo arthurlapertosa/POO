@@ -8,10 +8,18 @@ void Banco::adicionaCliente(Cliente& novo) {
 	clientes.push_back(novo);
 }
 
-void Banco::criarConta(Cliente& novaConta) {
-	Conta* conta = new Conta(novaConta);
-	contas.push_back(*conta);
-	delete conta;
+bool Banco::criarConta(std::string cpf) {
+	//passa pelos clientes até achar o cliente com o cpf
+	for (auto &i : clientes) {
+		if (i.getCpfCnpj() == cpf) {
+			Cliente* novo = &i;
+			Conta* conta = new Conta(novo);
+			contas.push_back(*conta);
+			return true;
+		}
+	}
+	return false;
+	
 }
 
 bool Banco::possuiConta(std::string cpf) {
@@ -26,18 +34,19 @@ bool Banco::possuiConta(std::string cpf) {
 
 void Banco::deletaCliente(std::string cpf) {
 	if (!possuiConta(cpf)) {
-		for (int i = 0; i < clientes.size(); i++) {
-			if (clientes[i].getCpfCnpj() == cpf) {
-				clientes.erase(clientes.begin() + i);
+		for (auto i = clientes.begin(); i != clientes.end(); i++) {
+			if (i->getCpfCnpj() == cpf) {
+				clientes.erase(i);
+				break;
 			}
 		}
 	}
 }
 
 void Banco::printClientes() {
-	for (int i = 0; i < clientes.size(); i++) {
-		std::cout << "CPF: " << clientes[i].getCpfCnpj() << ", Nome: " << clientes[i].getNomeCliente() << ", Endereco: " << clientes[i].getEndereco() <<
-			", Numero de telefone: " << clientes[i].getFone() << std::endl;
+	for (auto i : clientes) {
+		std::cout << "CPF: " << i.getCpfCnpj() << ", Nome: " << i.getNomeCliente() << ", Endereco: " << i.getEndereco() <<
+			", Numero de telefone: " << i.getFone() << std::endl;
 	}
 	std::cout << std::endl;
 }
@@ -45,7 +54,7 @@ void Banco::printClientes() {
 void Banco::printContas() {
 	for (int i = 0; i < contas.size(); i++) {
 		std::cout <<"Numero da conta: " << contas[i].getNumConta() << ", Saldo: " << contas[i].getSaldo() << ", CPF do titular: " << contas[i].getCliente().getCpfCnpj()
-			<< ", Nome do titular: " << contas[i].getCliente().getNomeCliente() << std::endl;
+			<< ", Nome do titular: " << contas[i].getCliente().getNomeCliente() << ", Endereco: " << contas[i].getCliente().getEndereco() << std::endl;
 	}
 	std::cout << std::endl;
 }
@@ -122,7 +131,7 @@ void Banco::cobrarCPMF() {
 		}
 }
 
-std::vector<Cliente> Banco::clientesLista() {
+std::list<Cliente> Banco::clientesLista() {
 	return clientes;
 }
 

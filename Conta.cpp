@@ -11,9 +11,9 @@
 
 int Conta::proximoNumConta;
 
-Conta::Conta(Cliente cliente) {
+Conta::Conta(Cliente *clienteNovo) {
 	this->saldo = 0.0;
-	this->cliente = cliente;
+	this->cliente = clienteNovo;
 	this->numConta = Conta::proximoNumConta;
 	Conta::proximoNumConta++;
 
@@ -27,7 +27,7 @@ Conta::~Conta() {
 //getters and setters
 
 const Cliente& Conta::getCliente() const {
-	return cliente;
+	return *cliente;
 }
 
 const std::vector<Movimentacao> Conta::getMovimentacoes() {

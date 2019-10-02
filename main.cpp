@@ -20,19 +20,21 @@ int main(int argc, char* argv[]){
 	Itau.adicionaCliente(*cli);
 	Itau.adicionaCliente(*new Cliente("Arthur", "06149", "BH", "10000"));
 
-	Itau.criarConta(*new Cliente("Arthur", "06149", "BH", "10000"));
-	Itau.criarConta(*new Cliente("Arthur", "06149", "BH", "10000"));
-	Itau.criarConta(*new Cliente("Rafa", "123", "BH", "123123"));
+	Itau.criarConta("06149");
+	Itau.criarConta("06149");
+	Itau.criarConta("123");
 
 	Itau.depositoConta(1, 300.0);
 	Itau.depositoConta(2, 300.0);
 
-	//Itau.printClientes();
+	Itau.printClientes();
 	Itau.printContas();
-	Itau.cobrarCPMF();
+	//Itau.cobrarCPMF();
 
-	Itau.printContas();
-
+	//Itau.printContas();
+	//for (auto &i : Itau.clientes) {  // Só funciona se deixar o atributo "clientes" como público na classe conta (para testar se a mudança de um atributo do cliente, muda também na conta dele)
+	//	i.setEndereco("New address");
+	//}
 	std::cout << std::endl;
 
 	Itau.deleteConta(2);// deleta a conta 2
