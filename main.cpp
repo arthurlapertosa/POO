@@ -26,12 +26,12 @@ int main(int argc, char* argv[]){
 //	b->depositoConta(1, 300.0);
 //	b->depositoConta(2, 300.0);
 
-
 	Interface *i = new Interface(*b);
 
 	i->getBanco().printContas();
 	i->depositar();
 	i->getBanco().printContas();
+
 
 	return 0;
 }

@@ -2,13 +2,14 @@
 #define BANCO_H
 #include "Cliente.h"
 #include "Conta.h"
+#include <list>
 
 using namespace std;
 
 class Banco {
 private:
 	std::string nomeBanco;
-	std::vector<Cliente> clientes;
+	std::list<Cliente> clientes;
 	std::vector<Conta> contas;
 
 public:
@@ -19,8 +20,8 @@ public:
 	//Adiciona um nome cliente
 	void adicionaCliente(Cliente& novo);
 
-	//Cria uma nova conta
-	void criarConta(Cliente& novaConta);
+	//Cria uma nova conta retorna true se criado e false se não criado
+	bool criarConta(std::string cpf);
 
 	//Checa se o cliente tem alguma conta
 	bool possuiConta(std::string cpf);
@@ -51,7 +52,7 @@ public:
 	void cobrarCPMF();
 
 	//Obtem a lista de clientes
-	std::vector<Cliente> clientesLista();
+	std::list<Cliente> clientesLista();
 
 	//Obtem a lista de contas
 	std::vector<Conta> contasLista();

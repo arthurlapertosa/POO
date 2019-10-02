@@ -16,12 +16,12 @@ class Conta {
 private:
 	int numConta;
 	double saldo;
-	Cliente cliente;
+	Cliente *cliente;
 	std::vector<Movimentacao> movimentacoes;
 	static int proximoNumConta;
 public:
 	//constructors
-	Conta(Cliente cliente);
+	Conta(Cliente *clienteNovo);
 
 	virtual ~Conta();
 	//Conta(const Conta &other);
