@@ -17,10 +17,14 @@ class Interface {
 private:
 	Banco banco;
 public:
-	Interface(Banco Banco);
+	Interface(Banco &banco);
+	Banco getBanco();
 	void menu();
 	void cadastrarCliente();
 	void criarConta();
+	void excluirCliente();
+	void excluirConta();
+	void depositar();
 	virtual ~Interface();
 };
 

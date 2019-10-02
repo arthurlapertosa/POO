@@ -15,12 +15,16 @@
 
 using namespace std;
 
-Interface::Interface(Banco banco) {
-
+Interface::Interface(Banco &banco) {
+	this->banco = banco;
 }
 
 Interface::~Interface() {
 	// TODO Auto-generated destructor stub
+}
+
+Banco Interface::getBanco() {
+	return this->banco;
 }
 
 void Interface::menu(){
@@ -76,7 +80,126 @@ void Interface::cadastrarCliente(){
 
 
 void Interface::criarConta(){
+	for(std::size_t i=0; i< this->banco.clientesLista().size(); i++) {
+		std::cout<<"Nome: "  + this->banco.clientesLista()[i].getNomeCliente();
+		std::cout<<"  CPF/CNPJ: "  + this->banco.clientesLista()[i].getCpfCnpj() << endl;
+	}
 
+	std::string cpf_cnpj;
+	std::cout<<"Insira o CPF/CNPJ do Cliente para criar uma conta: ";
+	getline(cin, cpf_cnpj);
+	bool found = false;
+
+	for(std::size_t i=0; i< this->banco.clientesLista().size(); i++) {
+		if (cpf_cnpj.compare(this->banco.clientesLista()[i].getCpfCnpj())) {
+
+			std::string nomeCliente = banco.clientesLista()[i-1].getNomeCliente();
+			std::string endereco = banco.clientesLista()[i-1].getEndereco();
+			std::string fone = banco.clientesLista()[i-1].getFone();
+
+			found = true;
+			this->banco.criarConta(*new Cliente(nomeCliente, cpf_cnpj, endereco, fone));
+		}
+	}
+
+	if (!found) {
+
+		std::cout<<"CPF/CNPJ nao encontrado. "<< endl;
+	}
+
+
+}
+
+void Interface::excluirCliente(){
+	for(std::size_t i=0; i< this->banco.clientesLista().size(); i++) {
+		std::cout<<"Nome: "  + this->banco.clientesLista()[i].getNomeCliente();
+		std::cout<<"  CPF/CNPJ: "  + this->banco.clientesLista()[i].getCpfCnpj() << endl;
+	}
+
+	std::string cpf_cnpj;
+	std::cout<<"Insira o CPF/CNPJ do Cliente para excluir: ";
+	getline(cin, cpf_cnpj);
+	bool found = false;
+
+	for(std::size_t i=0; i< this->banco.clientesLista().size(); i++) {
+		if (cpf_cnpj.compare(this->banco.clientesLista()[i].getCpfCnpj())) {
+			found = true;
+			this->banco.deletaCliente(cpf_cnpj);
+		}
+	}
+
+	if (!found) {
+
+		std::cout<<"CPF/CNPJ nao encontrado. "<< endl;
+	}
+
+
+}
+
+void Interface::excluirConta(){
+
+	for (int i = 0; i < banco.contasLista().size(); i++) {
+		std::cout <<"Numero da conta: " << banco.contasLista()[i].getNumConta() << ", Saldo: " << banco.contasLista()[i].getSaldo() << ", CPF do titular: " << banco.contasLista()[i].getCliente().getCpfCnpj()
+				<< ", Nome do titular: " << banco.contasLista()[i].getCliente().getNomeCliente() << std::endl;
+	}
+
+	int numConta;
+	std::cout<<"Insira o número da conta para excluir: ";
+	cin >> numConta;
+	bool found = false;
+
+	for(std::size_t i=0; i< this->banco.contasLista().size(); i++) {
+		if (numConta == this->banco.contasLista()[i].getNumConta()) {
+			found = true;
+			this->banco.deleteConta(numConta);
+		}
+	}
+
+	if (!found) {
+
+		std::cout<<"Numero da conta nao encontrado. "<< endl;
+	}
+
+
+}
+
+
+void Interface::depositar() {
+	for (int i = 0; i < banco.contasLista().size(); i++) {
+		std::cout <<"Numero da conta: " << banco.contasLista()[i].getNumConta() << ", Saldo: " << banco.contasLista()[i].getSaldo() << ", CPF do titular: " << banco.contasLista()[i].getCliente().getCpfCnpj()
+				<< ", Nome do titular: " << banco.contasLista()[i].getCliente().getNomeCliente() << std::endl;
+	}
+
+	int numConta;
+	std::cout<<"Insira o número da conta para depositar: ";
+	cin >> numConta;
+
+	double valor;
+	std::cout<<"Insira valor do deposito: ";
+	cin >> valor;
+
+	std::string descricao;
+	std::cout<<"Insira a descricao do deposito: ";
+	cin.ignore();
+	getline(cin, descricao);
+
+	bool found = false;
+
+	for(std::size_t i=0; i< this->banco.contasLista().size(); i++) {
+		if (numConta == this->banco.contasLista()[i].getNumConta()) {
+			found = true;
+
+			std::cout<<&banco.contasLista()[i];
+			this->banco.contasLista()[i].creditar(valor, descricao);
+			this->banco.printContas();
+		}
+	}
+
+
+	if (!found) {
+
+		std::cout<<"Numero da conta nao encontrado. "<< endl;
+	}
 }
 
 

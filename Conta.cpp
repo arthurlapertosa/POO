@@ -81,7 +81,7 @@ vector<Movimentacao> Conta::obterExtrato(std::string dataIni, std::string dataFi
 	char date_string[10];
 
 	vector<Movimentacao> * extrato = new vector<Movimentacao>;
-	for(std::size_t i=0; i< this->getMovimentacoes().size(); ++i) {
+	for(std::size_t i=0; i< this->getMovimentacoes().size(); i++) {
 
 		//convert time_t to string
 		seconds = this->getMovimentacoes()[i].getDataMov();
@@ -108,7 +108,7 @@ vector<Movimentacao> Conta::obterExtrato(std::string dataIni) {
 	char date_string[10];
 
 	vector<Movimentacao> * extrato = new vector<Movimentacao>;
-	for(std::size_t i=0; i< this->getMovimentacoes().size(); ++i) {
+	for(std::size_t i=0; i< this->getMovimentacoes().size(); i++) {
 
 		//convert time_t to string
 		seconds = this->getMovimentacoes()[i].getDataMov();
@@ -143,7 +143,7 @@ vector<Movimentacao> Conta::obterExtratoMesAtual() {
 
 
 	vector<Movimentacao> * extrato = new vector<Movimentacao>;
-	for(std::size_t i=0; i< this->getMovimentacoes().size(); ++i) {
+	for(std::size_t i=0; i< this->getMovimentacoes().size(); i++) {
 
 		//convert time_t to string
 		seconds = this->getMovimentacoes()[i].getDataMov();
