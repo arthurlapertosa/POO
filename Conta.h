@@ -35,7 +35,7 @@ public:
 
 	//methods
 	bool debitar(double valor, std::string descricao);
-	bool creditar(double valor, std::string descricao);
+	void creditar(double valor, std::string descricao);
 	vector<Movimentacao> obterExtrato(std::string dataIni, std::string dataFim);
 	vector<Movimentacao> obterExtrato(std::string dataIni);
 	vector<Movimentacao> obterExtratoMesAtual();

@@ -177,20 +177,13 @@ void Interface::depositar() {
 	std::cout<<"Insira valor do deposito: ";
 	cin >> valor;
 
-	std::string descricao;
-	std::cout<<"Insira a descricao do deposito: ";
-	cin.ignore();
-	getline(cin, descricao);
-
 	bool found = false;
 
 	for(std::size_t i=0; i< this->banco.contasLista().size(); i++) {
 		if (numConta == this->banco.contasLista()[i].getNumConta()) {
 			found = true;
-
-			std::cout<<&banco.contasLista()[i];
-			this->banco.contasLista()[i].creditar(valor, descricao);
-			this->banco.printContas();
+			this->banco.depositoConta(numConta, valor);
+			break;
 		}
 	}
 

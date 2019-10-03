@@ -8,6 +8,7 @@
 #include "Conta.h"
 #include "Cliente.h"
 #include <ctime>
+#include <iostream>
 
 int Conta::proximoNumConta;
 
@@ -61,17 +62,17 @@ bool Conta::debitar(double valor, std::string descricao) {
 
 }
 
-bool Conta::creditar(double valor, std::string descricao){
+void Conta::creditar(double valor, std::string descricao){
 	char debitoCredito = 'C';
 	Movimentacao * mov = new Movimentacao(descricao, debitoCredito, valor);
 
 
 	this->saldo = this->saldo + valor;
+
 	this->movimentacoes.push_back(* mov);
 
 	delete mov;
 
-	return true;
 }
 
 
