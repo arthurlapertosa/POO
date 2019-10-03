@@ -92,8 +92,8 @@ vector<Movimentacao> Conta::obterExtrato(std::string dataIni, std::string dataFi
 		std::string s(date_string);
 
 		//date compare
-		if(s >= dataIni) {
-			if (s <= dataFim) {
+		if(s <= dataIni) {
+			if (s >= dataFim) {
 				Movimentacao *mov = new Movimentacao( this->getMovimentacoes()[i].getDataMov(), this->getMovimentacoes()[i].getDescricao(), this->getMovimentacoes()[i].getDebitoCredito(), this->getMovimentacoes()[i].getValor());
 				extrato->push_back(*mov);
 			}
@@ -119,14 +119,14 @@ vector<Movimentacao> Conta::obterExtrato(std::string dataIni) {
 		std::string s(date_string);
 
 		//date compare
-		if(s >= dataIni) {
+		if(s <= dataIni) {
 			Movimentacao *mov = new Movimentacao( this->getMovimentacoes()[i].getDataMov(), this->getMovimentacoes()[i].getDescricao(), this->getMovimentacoes()[i].getDebitoCredito(), this->getMovimentacoes()[i].getValor());
 			extrato->push_back(*mov);
 			delete(mov);
 		}
 	}
 
-	delete curr_tm;
+	//delete curr_tm;
 	return *extrato;
 }
 

@@ -317,39 +317,37 @@ void Interface::obterExtrato() {
 	for(std::size_t i=0; i< this->banco.contasLista().size(); i++) {
 		if (numConta == this->banco.contasLista()[i].getNumConta()) {
 			found = true;
+			vector<Movimentacao> extrato;
+			std::string dataIniStr;
+			std::string dataFimStr;
 
 			switch(tipo) {
 			case 1:
-				vector<Movimentacao> extrato = this->banco.contasLista()[i].obterExtratoMesAtual();
+				extrato = this->banco.contasLista()[i].obterExtratoMesAtual();
 				//variaveis para converter time_t to string
 				time_t seconds;
 				tm * curr_tm;
 				char date_string[10];
 
-				for(std::size_t j=0; j< extrato.size(); j++) {
-
-					std::cout << extrato[j].getDescricao();
-					std::cout << " ";
-					std::cout << extrato[j].getValor();
-					std::cout << " ";
-
-					//convert time_t to string
-					seconds = extrato[j].getDataMov();
-					time(&seconds);
-					curr_tm = localtime(&seconds);
-					strftime(date_string, 50, "%d/%m/%Y %H:%M", curr_tm);
-					std::string s(date_string);
-
-					std::cout << date_string;
-					std::cout << " ";
-					std::cout << extrato[j].getDebitoCredito() << endl;
-
-				}
+				this->printarExtrato(extrato);
 				break;
-//			case 2:
-//				break;
-//			case 3:
-//				break;
+			case 2:
+				std::cout<<"Insira a data inicial (formato dd/mm/yyyy): ";
+				cin >> dataIniStr;
+				extrato = this->banco.contasLista()[i].obterExtrato(dataIniStr);
+
+				this->printarExtrato(extrato);
+				break;
+			case 3:
+
+				std::cout<<"Insira a data inicial (formato dd/mm/yyyy): ";
+				cin >> dataIniStr;
+				std::cout<<"Insira a data final (formato dd/mm/yyyy): ";
+				cin >> dataFimStr;
+				extrato = this->banco.contasLista()[i].obterExtrato(dataIniStr, dataFimStr);
+
+				this->printarExtrato(extrato);
+				break;
 //			case 4:
 //				return;
 
@@ -363,6 +361,32 @@ void Interface::obterExtrato() {
 	}
 
 
+}
+
+
+void Interface::printarExtrato(vector<Movimentacao> extrato) {
+	time_t seconds;
+	tm * curr_tm;
+	char date_string[10];
+	for(std::size_t j=0; j< extrato.size(); j++) {
+
+		std::cout << extrato[j].getDescricao();
+		std::cout << " ";
+		std::cout << extrato[j].getValor();
+		std::cout << " ";
+
+		//convert time_t to string
+		seconds = extrato[j].getDataMov();
+		time(&seconds);
+		curr_tm = localtime(&seconds);
+		strftime(date_string, 50, "%d/%m/%Y %H:%M", curr_tm);
+		std::string s(date_string);
+
+		std::cout << date_string;
+		std::cout << " ";
+		std::cout << extrato[j].getDebitoCredito() << endl;
+
+	}
 }
 
 

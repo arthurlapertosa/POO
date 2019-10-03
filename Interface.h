@@ -11,6 +11,7 @@
 #include "Movimentacao.h"
 #include "Cliente.h"
 #include "Conta.h"
+#include <vector>
 
 
 class Interface {
@@ -22,6 +23,7 @@ public:
 	void menu();
 	void printarContas();
 	void printarClientes();
+	void printarExtrato(vector<Movimentacao> extrato);
 	void cadastrarCliente();
 	void criarConta();
 	void excluirCliente();
