@@ -35,6 +35,9 @@ public:
 	//static int getProximoNumConta();
 	double getSaldo() const;
 
+	//Seta o ponteiro pro cliente
+	void setCliente(Cliente *newCliente);
+
 	//methods
 	bool debitar(double valor, std::string descricao);
 	void creditar(double valor, std::string descricao);

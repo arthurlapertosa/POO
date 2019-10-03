@@ -50,6 +50,11 @@ double Conta::getSaldo() const {
 	return saldo;
 }
 
+void Conta::setCliente(Cliente* newCliente)
+{
+	cliente = newCliente;
+}
+
 //methods
 
 bool Conta::debitar(double valor, std::string descricao) {

@@ -185,9 +185,10 @@ std::istream& operator>>(std::istream& in, Banco& obj)
 	int numClientes;
 	in >> numClientes;
 	for (int i = 0; i < numClientes; i++) {
-		Cliente *novo = new Cliente;
+		Cliente* novo = new Cliente;
 		in >> *novo;
 		obj.clientes.push_back(*novo);
+		delete novo;
 	}
 
 	//Pega as contas
@@ -196,6 +197,19 @@ std::istream& operator>>(std::istream& in, Banco& obj)
 	for (int i = 0; i < numContas; i++) {
 		Conta* nova = new Conta;
 		in >> *nova;
+		std::string cpf;
+		cpf = nova->getCliente().getCpfCnpj();
+
+		//Acha o endereço do cliente associado para colocar na conta corretamente
+		for (auto& i : obj.clientes) {
+			if (i.getCpfCnpj() == cpf) {
+				Cliente* novo = &i;
+				nova->setCliente(novo);
+			}
+		}
+
 		obj.contas.push_back(*nova);
+		delete nova;
 	}
+
 }

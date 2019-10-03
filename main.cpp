@@ -65,6 +65,12 @@ int main(int argc, char* argv[]){
 
 	Banco b;
 	b.readFile();
-
+	b.printContas();
+	b.printClientes();
+	for (auto& i : b.clientes) {
+		i.setEndereco("Mudou!");
+	}
+	b.printContas();
+	b.printClientes();
 	return 0;
 }
