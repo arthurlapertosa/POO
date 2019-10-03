@@ -29,39 +29,86 @@ Banco Interface::getBanco() {
 }
 
 void Interface::menu(){
-  while(1){
-    std::cout<< "------------- " <<"MENU"<< " -------------" <<"\n\t\t\t";
-    std::cout << "Escolha qual opção deseja realizar" << "\n\t\t\t";
-    std::cout << "(1) - Cadastrar cliente" << "\n\t\t\t";
-    std::cout << "(2) - Criar nova conta" << "\n\t\t\t";
-    std::cout << "(3) - Excluir cliente" << "\n\t\t\t";
-    std::cout << "(4) - Excluir conta" << "\n\t\t\t";
-    std::cout << "(5) - Efetuar depósito" << "\n\t\t\t";
-    std::cout << "(6) - Efetuar saque" << "\n\t\t\t";
-    std::cout << "(7) - Efetuar transferência" << "\n\t\t\t";
-    std::cout << "(8) - Cobrar tarifa" << "\n\t\t\t";
-    std::cout << "(9) - Cobrar CPMF" << "\n\t\t\t";
-    std::cout << "(10) - Obter saldo" << "\n\t\t\t";
-    std::cout << "(11) - Obter extrato" << "\n\t\t\t";
-    std::cout << "(12) - Listar clientes" << "\n\t\t\t";
-    std::cout << "(13) - Listar contas" << "\n\t\t\t";
-    std::cout << "(14) - Sair" << "\n\t\t\t";
+    std::cout<< "--------- MENU ----------" << endl;
+    std::cout << "1. Cadastrar cliente" << endl;
+    std::cout << "2. Criar nova conta" << endl;
+    std::cout << "3. Excluir cliente" << endl;
+    std::cout << "4. Excluir conta"  << endl;
+    std::cout << "5. Efetuar depósito" << endl;
+    std::cout << "6. Efetuar saque"  << endl;
+    std::cout << "7. Efetuar transferência" << endl;
+    std::cout << "8. Cobrar tarifa"  << endl;
+    std::cout << "9. Cobrar CPMF"  << endl;
+    std::cout << "10. Obter saldo" << endl;
+    std::cout << "11. Obter extrato" << endl;
+    std::cout << "12. Listar clientes" << endl;
+    std::cout << "13. Listar contas" << endl;
+    std::cout << "14. Sair" << endl;
 
-    int entrada = 0;
-    std::cin >> entrada;
+    std::string stropcao = "0";
+    int opcao = 0;
 
-    switch (entrada){
-        case 0:
-        	this->cadastrarCliente();
-          break;
+    while (opcao != 1 && opcao != 2 && opcao != 3 && opcao != 4 && opcao != 5 && opcao != 6 && opcao != 7
+    		&& opcao != 8 && opcao != 9 && opcao != 10 && opcao != 11 && opcao != 12 && opcao != 13 && opcao != 14){
+        std::cout << "Escolha uma opção válida: ";
+
+		getline(cin, stropcao);
+		try {
+			opcao = stoi(stropcao);
+		} catch (...) {
+			opcao = 0;
+		}
+
+	}
+
+    switch (opcao){
         case 1:
-          break;
+        	this->cadastrarCliente();
+        	break;
+        case 2:
+        	this->criarConta();
+        	break;
+        case 3:
+			this->excluirCliente();
+			break;
+        case 4:
+        	this->excluirConta();
+        	break;
+        case 5:
+        	this->depositar();
+        	break;
+        case 6:
+        	this->sacar();
+        	break;
+        case 7:
+        	this->transferir();
+        	break;
+        case 8:
+        	this->cobrarTarifa();
+        	break;
+        case 9:
+        	this->cobrarCPMF();
+        	break;
+        case 10:
+        	this->obterSaldo();
+        	break;
+        case 11:
+        	this->obterExtrato();
+        	break;
+        case 12:
+        	this->printarClientes();
+        	break;
+        case 13:
+        	this->printarContas();
+        	break;
+        case 14:
+        	return;
+
     }
- }
 }
 
 void Interface::printarContas() {
-	for (int i = 0; i < banco.contasLista().size(); i++) {
+	for (long unsigned int i = 0; i < banco.contasLista().size(); i++) {
 		std::cout <<"Numero da conta: " << banco.contasLista()[i].getNumConta() << ", Saldo: " << banco.contasLista()[i].getSaldo() << ", CPF do titular: " << banco.contasLista()[i].getCliente().getCpfCnpj()
 				<< ", Nome do titular: " << banco.contasLista()[i].getCliente().getNomeCliente() << std::endl;
 	}
@@ -75,9 +122,9 @@ void Interface::printarClientes() {
 	std::cout << std::endl;
 }
 
-
-
 void Interface::cadastrarCliente(){
+
+    std::cout<< "\n--------- CADASTRO DE CLIENTE ----------" << endl;
 	std::string nomeCliente;
 	std::string cpf_cnpj;
 	std::string endereco;
@@ -95,8 +142,8 @@ void Interface::cadastrarCliente(){
     this->banco.adicionaCliente(*cliente);
 }
 
-
 void Interface::criarConta(){
+    std::cout<< "\n--------- CRIAR CONTA ----------" << endl;
 	this->printarClientes();
 
 	std::string cpf_cnpj;
@@ -121,6 +168,7 @@ void Interface::criarConta(){
 }
 
 void Interface::excluirCliente(){
+    std::cout<< "\n--------- EXCLUIR CLIENTE ----------" << endl;
 	std::string cpf_cnpj;
 	std::cout<<"Insira o CPF/CNPJ do Cliente para excluir: ";
 	getline(cin, cpf_cnpj);
@@ -143,6 +191,7 @@ void Interface::excluirCliente(){
 }
 
 void Interface::excluirConta(){
+    std::cout<< "\n--------- EXCLUIR CONTA ----------" << endl;
 
 	this->printarContas();
 
@@ -166,8 +215,8 @@ void Interface::excluirConta(){
 
 }
 
-
 void Interface::depositar() {
+    std::cout<< "\n--------- DEPÓSITO ----------" << endl;
 	this->printarContas();
 
 	int numConta;
@@ -196,6 +245,7 @@ void Interface::depositar() {
 }
 
 void Interface::sacar() {
+    std::cout<< "\n--------- SAQUE ----------" << endl;
 
 	this->printarContas();
 
@@ -227,6 +277,7 @@ void Interface::sacar() {
 }
 
 void Interface::transferir() {
+    std::cout<< "\n--------- TRANSFERENCIA ----------" << endl;
 
 	this->printarContas();
 
@@ -265,7 +316,7 @@ void Interface::cobrarCPMF() {
 }
 
 void Interface::obterSaldo() {
-
+    std::cout<< "\n--------- OBTER SALDO ----------" << endl;
 	this->printarContas();
 
 	int numConta;
@@ -323,15 +374,14 @@ void Interface::obterExtrato() {
 
 			switch(tipo) {
 			case 1:
+			    std::cout<< "\n--------- EXTRATO MES ATUAL ---------" << endl;
+
 				extrato = this->banco.contasLista()[i].obterExtratoMesAtual();
-				//variaveis para converter time_t to string
-				time_t seconds;
-				tm * curr_tm;
-				char date_string[10];
 
 				this->printarExtrato(extrato);
 				break;
 			case 2:
+			    std::cout<< "\n--------- EXTRATO PERÍODO ATUAL ---------" << endl;
 				std::cout<<"Insira a data inicial (formato dd/mm/yyyy): ";
 				cin >> dataIniStr;
 				extrato = this->banco.contasLista()[i].obterExtrato(dataIniStr);
@@ -339,6 +389,7 @@ void Interface::obterExtrato() {
 				this->printarExtrato(extrato);
 				break;
 			case 3:
+			    std::cout<< "\n--------- EXTRATO PERÍODO PASSADO ---------" << endl;
 
 				std::cout<<"Insira a data inicial (formato dd/mm/yyyy): ";
 				cin >> dataIniStr;
