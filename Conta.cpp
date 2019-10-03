@@ -12,7 +12,7 @@
 
 int Conta::proximoNumConta;
 
-Conta::Conta(Cliente *clienteNovo) {
+Conta::Conta(Cliente * clienteNovo) {
 	this->saldo = 0.0;
 	this->cliente = clienteNovo;
 	this->numConta = Conta::proximoNumConta;
@@ -46,19 +46,19 @@ double Conta::getSaldo() const {
 //methods
 
 bool Conta::debitar(double valor, std::string descricao) {
+	bool transacaorealizada = false;
 	char debitoCredito = 'D';
 	Movimentacao * mov = new Movimentacao(descricao, debitoCredito, valor);
 
-	if (valor <= this->saldo) {
+	if (this->saldo >= valor) {
 		this->saldo = this->saldo - valor;
 		this->movimentacoes.push_back(* mov);
-
-		delete mov;
-
-		return true;
-	} else {
-		return false;
+		transacaorealizada = true;
 	}
+
+	delete mov;
+
+	return transacaorealizada;
 
 }
 
@@ -92,8 +92,8 @@ vector<Movimentacao> Conta::obterExtrato(std::string dataIni, std::string dataFi
 		std::string s(date_string);
 
 		//date compare
-		if(s >= dataIni) {
-			if (s <= dataFim) {
+		if(s <= dataIni) {
+			if (s >= dataFim) {
 				Movimentacao *mov = new Movimentacao( this->getMovimentacoes()[i].getDataMov(), this->getMovimentacoes()[i].getDescricao(), this->getMovimentacoes()[i].getDebitoCredito(), this->getMovimentacoes()[i].getValor());
 				extrato->push_back(*mov);
 			}
@@ -119,14 +119,14 @@ vector<Movimentacao> Conta::obterExtrato(std::string dataIni) {
 		std::string s(date_string);
 
 		//date compare
-		if(s >= dataIni) {
+		if(s <= dataIni) {
 			Movimentacao *mov = new Movimentacao( this->getMovimentacoes()[i].getDataMov(), this->getMovimentacoes()[i].getDescricao(), this->getMovimentacoes()[i].getDebitoCredito(), this->getMovimentacoes()[i].getValor());
 			extrato->push_back(*mov);
 			delete(mov);
 		}
 	}
 
-	delete curr_tm;
+	//delete curr_tm;
 	return *extrato;
 }
 

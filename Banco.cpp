@@ -122,17 +122,15 @@ bool Banco::transferencia(int numContaOrigem, int numContaDestino, double valor)
 }
 
 void Banco::cobrarTarifa() {
-	for (int i = 0; i < contas.size(); i++) {
-		contas[i].debitar(15.0, "Tarifa");
+	for (int i = 0; i < this->contas.size(); i++) {
+		this->contas[i].debitar(15.0, "Tarifa");
 	}
 }
 
 void Banco::cobrarCPMF() {
 	for (int i = 0; i < contas.size(); i++) {
-
-			contas[i].debitar(15.0, "Tarifa");
-			contas[i].debitar(contas[i].getSaldo()*0.038, "Tarifa");
-		}
+		contas[i].debitar(contas[i].getSaldo()*0.038, "Tarifa");
+	}
 }
 
 std::list<Cliente> Banco::clientesLista() {
