@@ -348,8 +348,8 @@ void Interface::obterExtrato() {
 
 				this->printarExtrato(extrato);
 				break;
-//			case 4:
-//				return;
+			case 4:
+				return;
 
 			}
 		}
