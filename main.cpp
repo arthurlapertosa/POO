@@ -22,14 +22,17 @@ int main(int argc, char* argv[]){
 
 	b->criarConta("06149");
 	b->criarConta("123");
-//
-//	b->depositoConta(1, 300.0);
-//	b->depositoConta(2, 300.0);
+
+	b->depositoConta(0, 10.0);
+	b->depositoConta(0, 102.0);
+	b->depositoConta(0, 120.0);
+	b->saqueConta(0, 10.0);
+	b->depositoConta(1, 300.0);
 
 	Interface *i = new Interface(*b);
 
 	i->getBanco().printContas();
-	i->depositar();
+	i->obterExtrato();
 	i->getBanco().printContas();
 
 

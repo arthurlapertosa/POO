@@ -12,7 +12,7 @@
 
 int Conta::proximoNumConta;
 
-Conta::Conta(Cliente *clienteNovo) {
+Conta::Conta(Cliente * clienteNovo) {
 	this->saldo = 0.0;
 	this->cliente = clienteNovo;
 	this->numConta = Conta::proximoNumConta;
@@ -46,19 +46,19 @@ double Conta::getSaldo() const {
 //methods
 
 bool Conta::debitar(double valor, std::string descricao) {
+	bool transacaorealizada = false;
 	char debitoCredito = 'D';
 	Movimentacao * mov = new Movimentacao(descricao, debitoCredito, valor);
 
-	if (valor <= this->saldo) {
+	if (this->saldo >= valor) {
 		this->saldo = this->saldo - valor;
 		this->movimentacoes.push_back(* mov);
-
-		delete mov;
-
-		return true;
-	} else {
-		return false;
+		transacaorealizada = true;
 	}
+
+	delete mov;
+
+	return transacaorealizada;
 
 }
 

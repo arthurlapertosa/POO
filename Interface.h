@@ -20,11 +20,19 @@ public:
 	Interface(Banco &banco);
 	Banco getBanco();
 	void menu();
+	void printarContas();
+	void printarClientes();
 	void cadastrarCliente();
 	void criarConta();
 	void excluirCliente();
 	void excluirConta();
 	void depositar();
+	void sacar();
+	void transferir();
+	void cobrarTarifa();
+	void cobrarCPMF();
+	void obterSaldo();
+	void obterExtrato();
 	virtual ~Interface();
 };
 

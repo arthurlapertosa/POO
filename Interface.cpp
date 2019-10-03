@@ -12,6 +12,7 @@
 #include "Conta.h"
 #include <iostream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -59,6 +60,22 @@ void Interface::menu(){
  }
 }
 
+void Interface::printarContas() {
+	for (int i = 0; i < banco.contasLista().size(); i++) {
+		std::cout <<"Numero da conta: " << banco.contasLista()[i].getNumConta() << ", Saldo: " << banco.contasLista()[i].getSaldo() << ", CPF do titular: " << banco.contasLista()[i].getCliente().getCpfCnpj()
+				<< ", Nome do titular: " << banco.contasLista()[i].getCliente().getNomeCliente() << std::endl;
+	}
+}
+
+void Interface::printarClientes() {
+	for (auto i : this->banco.clientesLista()) {
+		std::cout << "CPF: " << i.getCpfCnpj() << ", Nome: " << i.getNomeCliente() << ", Endereco: " << i.getEndereco() <<
+			", Numero de telefone: " << i.getFone() << std::endl;
+	}
+	std::cout << std::endl;
+}
+
+
 
 void Interface::cadastrarCliente(){
 	std::string nomeCliente;
@@ -80,11 +97,7 @@ void Interface::cadastrarCliente(){
 
 
 void Interface::criarConta(){
-	for (auto i : this->banco.clientesLista()) {
-		std::cout << "CPF: " << i.getCpfCnpj() << ", Nome: " << i.getNomeCliente() << ", Endereco: " << i.getEndereco() <<
-			", Numero de telefone: " << i.getFone() << std::endl;
-	}
-	std::cout << std::endl;
+	this->printarClientes();
 
 	std::string cpf_cnpj;
 	std::cout<<"Insira o CPF/CNPJ do Cliente para criar uma conta: ";
@@ -108,12 +121,6 @@ void Interface::criarConta(){
 }
 
 void Interface::excluirCliente(){
-	for (auto i : this->banco.clientesLista()) {
-		std::cout << "CPF: " << i.getCpfCnpj() << ", Nome: " << i.getNomeCliente() << ", Endereco: " << i.getEndereco() <<
-			", Numero de telefone: " << i.getFone() << std::endl;
-	}
-	std::cout << std::endl;
-
 	std::string cpf_cnpj;
 	std::cout<<"Insira o CPF/CNPJ do Cliente para excluir: ";
 	getline(cin, cpf_cnpj);
@@ -137,10 +144,7 @@ void Interface::excluirCliente(){
 
 void Interface::excluirConta(){
 
-	for (int i = 0; i < banco.contasLista().size(); i++) {
-		std::cout <<"Numero da conta: " << banco.contasLista()[i].getNumConta() << ", Saldo: " << banco.contasLista()[i].getSaldo() << ", CPF do titular: " << banco.contasLista()[i].getCliente().getCpfCnpj()
-				<< ", Nome do titular: " << banco.contasLista()[i].getCliente().getNomeCliente() << std::endl;
-	}
+	this->printarContas();
 
 	int numConta;
 	std::cout<<"Insira o número da conta para excluir: ";
@@ -164,10 +168,7 @@ void Interface::excluirConta(){
 
 
 void Interface::depositar() {
-	for (int i = 0; i < banco.contasLista().size(); i++) {
-		std::cout <<"Numero da conta: " << banco.contasLista()[i].getNumConta() << ", Saldo: " << banco.contasLista()[i].getSaldo() << ", CPF do titular: " << banco.contasLista()[i].getCliente().getCpfCnpj()
-				<< ", Nome do titular: " << banco.contasLista()[i].getCliente().getNomeCliente() << std::endl;
-	}
+	this->printarContas();
 
 	int numConta;
 	std::cout<<"Insira o número da conta para depositar: ";
@@ -192,6 +193,176 @@ void Interface::depositar() {
 
 		std::cout<<"Numero da conta nao encontrado. "<< endl;
 	}
+}
+
+void Interface::sacar() {
+
+	this->printarContas();
+
+	int numConta;
+	std::cout<<"Insira o número da conta para sacar: ";
+	cin >> numConta;
+
+	double valor;
+	std::cout<<"Insira valor do saque: ";
+	cin >> valor;
+
+	bool found = false;
+
+	for(std::size_t i=0; i< this->banco.contasLista().size(); i++) {
+		if (numConta == this->banco.contasLista()[i].getNumConta()) {
+			found = true;
+			if (!this->banco.saqueConta(numConta, valor)) {
+				cout << "Saldo insuficiente." << endl;
+			}
+			break;
+		}
+	}
+
+
+	if (!found) {
+
+		std::cout<<"Numero da conta nao encontrado. "<< endl;
+	}
+}
+
+void Interface::transferir() {
+
+	this->printarContas();
+
+	int numContaOrigem;
+	std::cout<<"Insira o número da conta de origem: ";
+	cin >> numContaOrigem;
+
+	int numContaDestino;
+	std::cout<<"Insira o número da conta de destino: ";
+	cin >> numContaDestino;
+
+	double valor;
+	std::cout<<"Insira valor da transferencia: ";
+	cin >> valor;
+
+
+	for(std::size_t i=0; i< this->banco.contasLista().size(); i++) {
+
+		if (!this->banco.transferencia(numContaOrigem, numContaDestino, valor)) {
+			cout << "Não foi possivel realizar a transferencia." << endl;
+		}
+
+		break;
+	}
+
+}
+
+void Interface::cobrarTarifa() {
+	this->banco.cobrarTarifa();
+	std::cout<<"Tarifa cobrada." << endl;
+}
+
+void Interface::cobrarCPMF() {
+	this->banco.cobrarCPMF();
+	std::cout<<"CPMF cobrada." << endl;
+}
+
+void Interface::obterSaldo() {
+
+	this->printarContas();
+
+	int numConta;
+	std::cout<<"Insira o número da conta para obter saldo: ";
+	cin >> numConta;
+	bool found = false;
+
+	for(std::size_t i=0; i< this->banco.contasLista().size(); i++) {
+		if (numConta == this->banco.contasLista()[i].getNumConta()) {
+			found = true;
+			cout << "Saldo: ";
+			cout << this->banco.contasLista()[i].getSaldo()<< endl;
+		}
+	}
+
+	if (!found) {
+
+		std::cout<<"Numero da conta nao encontrado. "<< endl;
+	}
+
+
+}
+
+void Interface::obterExtrato() {
+
+	this->printarContas();
+
+	int numConta;
+	std::cout<<"Insira o número da conta para obter extrato: ";
+	cin >> numConta;
+
+	int tipo = 0;
+	std::cout<<"Tipo de extrato: " << endl;
+	std::cout<<"1. Mes atual" << endl;
+	std::cout<<"2. A partir de uma data" << endl;
+	std::cout<<"3. Entre duas datas" << endl;
+	std::cout<<"4. Sair" << endl;
+
+	while (tipo != 1 && tipo != 2 && tipo != 3 && tipo != 4){
+		std::cout<<"Selecione a opção do menu: ";
+		cin >> tipo;
+	}
+
+
+
+
+	bool found = false;
+
+	for(std::size_t i=0; i< this->banco.contasLista().size(); i++) {
+		if (numConta == this->banco.contasLista()[i].getNumConta()) {
+			found = true;
+
+			switch(tipo) {
+			case 1:
+				vector<Movimentacao> extrato = this->banco.contasLista()[i].obterExtratoMesAtual();
+				//variaveis para converter time_t to string
+				time_t seconds;
+				tm * curr_tm;
+				char date_string[10];
+
+				for(std::size_t j=0; j< extrato.size(); j++) {
+
+					std::cout << extrato[j].getDescricao();
+					std::cout << " ";
+					std::cout << extrato[j].getValor();
+					std::cout << " ";
+
+					//convert time_t to string
+					seconds = extrato[j].getDataMov();
+					time(&seconds);
+					curr_tm = localtime(&seconds);
+					strftime(date_string, 50, "%d/%m/%Y %H:%M", curr_tm);
+					std::string s(date_string);
+
+					std::cout << date_string;
+					std::cout << " ";
+					std::cout << extrato[j].getDebitoCredito() << endl;
+
+				}
+				break;
+//			case 2:
+//				break;
+//			case 3:
+//				break;
+//			case 4:
+//				return;
+
+			}
+		}
+	}
+
+	if (!found) {
+
+		std::cout<<"Numero da conta nao encontrado. "<< endl;
+	}
+
+
 }
 
 
