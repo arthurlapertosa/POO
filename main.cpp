@@ -20,8 +20,8 @@ int main(int argc, char* argv[]){
 	b->adicionaCliente(*cli);
 	b->adicionaCliente(*new Cliente("Arthur", "06149", "BH", "10000"));
 
-	b->criarConta(*new Cliente("Arthur", "06149", "BH", "10000"));
-	b->criarConta(*new Cliente("Rafa", "123", "BH", "123123"));
+	b->criarConta("06149");
+	b->criarConta("123");
 //
 //	b->depositoConta(1, 300.0);
 //	b->depositoConta(2, 300.0);

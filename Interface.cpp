@@ -80,25 +80,22 @@ void Interface::cadastrarCliente(){
 
 
 void Interface::criarConta(){
-	for(std::size_t i=0; i< this->banco.clientesLista().size(); i++) {
-		std::cout<<"Nome: "  + this->banco.clientesLista()[i].getNomeCliente();
-		std::cout<<"  CPF/CNPJ: "  + this->banco.clientesLista()[i].getCpfCnpj() << endl;
+	for (auto i : this->banco.clientesLista()) {
+		std::cout << "CPF: " << i.getCpfCnpj() << ", Nome: " << i.getNomeCliente() << ", Endereco: " << i.getEndereco() <<
+			", Numero de telefone: " << i.getFone() << std::endl;
 	}
+	std::cout << std::endl;
 
 	std::string cpf_cnpj;
 	std::cout<<"Insira o CPF/CNPJ do Cliente para criar uma conta: ";
 	getline(cin, cpf_cnpj);
 	bool found = false;
 
-	for(std::size_t i=0; i< this->banco.clientesLista().size(); i++) {
-		if (cpf_cnpj.compare(this->banco.clientesLista()[i].getCpfCnpj())) {
 
-			std::string nomeCliente = banco.clientesLista()[i-1].getNomeCliente();
-			std::string endereco = banco.clientesLista()[i-1].getEndereco();
-			std::string fone = banco.clientesLista()[i-1].getFone();
-
+	for (auto i : this->banco.clientesLista()) {
+		if (cpf_cnpj.compare(i.getCpfCnpj())) {
 			found = true;
-			this->banco.criarConta(*new Cliente(nomeCliente, cpf_cnpj, endereco, fone));
+			this->banco.criarConta(cpf_cnpj);
 		}
 	}
 
@@ -111,18 +108,20 @@ void Interface::criarConta(){
 }
 
 void Interface::excluirCliente(){
-	for(std::size_t i=0; i< this->banco.clientesLista().size(); i++) {
-		std::cout<<"Nome: "  + this->banco.clientesLista()[i].getNomeCliente();
-		std::cout<<"  CPF/CNPJ: "  + this->banco.clientesLista()[i].getCpfCnpj() << endl;
+	for (auto i : this->banco.clientesLista()) {
+		std::cout << "CPF: " << i.getCpfCnpj() << ", Nome: " << i.getNomeCliente() << ", Endereco: " << i.getEndereco() <<
+			", Numero de telefone: " << i.getFone() << std::endl;
 	}
+	std::cout << std::endl;
 
 	std::string cpf_cnpj;
 	std::cout<<"Insira o CPF/CNPJ do Cliente para excluir: ";
 	getline(cin, cpf_cnpj);
 	bool found = false;
 
-	for(std::size_t i=0; i< this->banco.clientesLista().size(); i++) {
-		if (cpf_cnpj.compare(this->banco.clientesLista()[i].getCpfCnpj())) {
+
+	for (auto i : this->banco.clientesLista()) {
+		if (cpf_cnpj.compare(i.getCpfCnpj())) {
 			found = true;
 			this->banco.deletaCliente(cpf_cnpj);
 		}

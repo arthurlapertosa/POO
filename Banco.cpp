@@ -13,7 +13,7 @@ void Banco::adicionaCliente(Cliente& novo) {
 }
 
 bool Banco::criarConta(std::string cpf) {
-	//passa pelos clientes até achar o cliente com o cpf
+	//passa pelos clientes atï¿½ achar o cliente com o cpf
 	for (auto &i : clientes) {
 		if (i.getCpfCnpj() == cpf) {
 			Cliente* novo = &i;
