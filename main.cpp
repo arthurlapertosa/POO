@@ -15,26 +15,62 @@ using namespace std;
 
 int main(int argc, char* argv[]){
 
-	Banco *b = new Banco("Itau");
-	Cliente* cli = new Cliente("Rafa", "123", "BH", "123123");
-	b->adicionaCliente(*cli);
-	b->adicionaCliente(*new Cliente("Arthur", "06149", "BH", "10000"));
+//	Banco *b = new Banco("Itau");
+//	Cliente* cli = new Cliente("Rafa", "123", "BH", "123123");
+//	b->adicionaCliente(*cli);
+//	b->adicionaCliente(*new Cliente("Arthur", "06149", "BH", "10000"));
+//
+//	b->criarConta("06149");
+//	b->criarConta("123");
+////
+////	b->depositoConta(1, 300.0);
+////	b->depositoConta(2, 300.0);
+//
+//	Interface *i = new Interface(*b);
+//
+//	i->getBanco().printContas();
+//	i->depositar();
+//	i->getBanco().printContas();
+//
+//
+	//Movimentacao a("Teste", 'd', 138.2);
+	//std::ofstream out("students.txt");
+	//out << a;
 
-	b->criarConta("06149");
-	b->criarConta("123");
+	//Movimentacao b;
+	//std::ifstream in("students.txt");
+	//in >> b;
+	//std::cout << b.getDescricao() << endl;
+	//Conta a(new Cliente("Arthur", "061", "BH", "3296"));
+	//a.creditar(138.0, "Teste");
+	//a.creditar(300.0, "Teste2");
+	//std::ofstream out("test.txt");
+	//out << a;
 
-	b->depositoConta(0, 10.0);
-	b->depositoConta(0, 102.0);
-	b->depositoConta(0, 120.0);
-	b->saqueConta(0, 10.0);
-	b->depositoConta(1, 300.0);
+	//Conta b;
+	//std::ifstream in("test.txt");
+	//in >> b;
 
-	Interface *i = new Interface(*b);
-
-	i->getBanco().printContas();
-	i->obterExtrato();
-	i->getBanco().printContas();
+	//i->getBanco().printContas();
+	//i->obterExtrato();
+	//i->getBanco().printContas();
 
 
+	Banco itau("Itau");
+	itau.adicionaCliente(*new Cliente("Arthur", "061", "BH", "3296"));
+	itau.adicionaCliente(*new Cliente("Rafa", "123", "BH", "9873"));
+	itau.adicionaCliente(*new Cliente("Rafa2", "1234", "BH", "99873"));
+	itau.criarConta("061");
+	itau.criarConta("123");
+	itau.depositoConta(0, 300.0);
+	itau.depositoConta(1, 270.0);
+	itau.cobrarCPMF();
+	
+	itau.writeFile();
+
+	Banco b;
+	b.readFile();
+	b.printContas();
+	b.printClientes();
 	return 0;
 }

@@ -7,6 +7,13 @@
 
 #include "Movimentacao.h"
 
+Movimentacao::Movimentacao()
+{
+	descricao = "";
+	debitoCredito = 'n';
+	valor = 0;
+}
+
 Movimentacao::Movimentacao(std::string descricao, char debitoCredito, double valor) {
 	this->descricao = descricao;
 	this->debitoCredito = debitoCredito;
@@ -49,4 +56,17 @@ double Movimentacao::getValor() const {
 	return valor;
 }
 
+std::ostream& operator<<(std::ostream& out, const Movimentacao& obj)
+{
+	out << obj.dataMov << "\n" << obj.descricao << "\n" << obj.debitoCredito << "\n" << obj.valor << std::endl;
+	return out;
+}
 
+std::istream& operator>>(std::istream& in, Movimentacao& obj)
+{
+	in >> obj.dataMov;
+	in >> obj.descricao;
+	in >> obj.debitoCredito;
+	in >> obj.valor;
+	return in;
+}

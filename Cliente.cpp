@@ -59,3 +59,17 @@ void Cliente::setNomeCliente(const std::string &nomeCliente) {
 	this->nomeCliente = nomeCliente;
 }
 
+std::ostream& operator<<(std::ostream& out, const Cliente& obj)
+{
+	out << obj.nomeCliente << "\n" << obj.cpf_cnpj << "\n" << obj.endereco << "\n" << obj.fone << std::endl;
+	return out;
+}
+
+std::istream& operator>>(std::istream& in, Cliente& obj)
+{
+	in >> obj.nomeCliente;
+	in >> obj.cpf_cnpj;
+	in >> obj.endereco;
+	in >> obj.fone;
+	return in;
+}

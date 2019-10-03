@@ -12,6 +12,13 @@
 
 int Conta::proximoNumConta;
 
+Conta::Conta()
+{
+	this->saldo = 0.0;
+	this->numConta = Conta::proximoNumConta;
+	Conta::proximoNumConta++;
+}
+
 Conta::Conta(Cliente * clienteNovo) {
 	this->saldo = 0.0;
 	this->cliente = clienteNovo;
@@ -41,6 +48,11 @@ int Conta::getNumConta() const {
 
 double Conta::getSaldo() const {
 	return saldo;
+}
+
+void Conta::setCliente(Cliente* newCliente)
+{
+	cliente = newCliente;
 }
 
 //methods
@@ -165,3 +177,30 @@ vector<Movimentacao> Conta::obterExtratoMesAtual() {
 	return *extrato;
 }
 
+std::ostream& operator << (std::ostream& out, const Conta& obj) {
+	out << obj.numConta << "\n" << obj.saldo << "\n" << *obj.cliente << "\n" << obj.proximoNumConta << "\n" << obj.movimentacoes.size() << "\n";
+	for (int i = 0; i < obj.movimentacoes.size(); i++) {
+		out << obj.movimentacoes[i];
+	}
+	std::cout << std::endl;
+
+	return out;
+}
+
+std::istream& operator >> (std::istream& in, Conta& obj) {
+	in >> obj.numConta;
+	in >> obj.saldo;
+	Cliente* novo = new Cliente;
+	in >> *novo;
+	obj.cliente = novo;
+	in >> obj.proximoNumConta;
+	int size;
+	in >> size;
+	for (int i = 0; i < size; i++) {
+		Movimentacao* aux = new Movimentacao();
+		in >> *aux;
+		obj.movimentacoes.push_back(*aux);
+		delete aux;
+	}
+	return in;
+}

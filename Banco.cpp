@@ -140,3 +140,74 @@ std::list<Cliente> Banco::clientesLista() {
 std::vector<Conta> Banco::contasLista() {
 	return contas;
 }
+
+void Banco::writeFile()
+{
+	std::ofstream out("banco.txt");
+	out << *this;
+}
+
+void Banco::readFile()
+{
+	std::ifstream in("banco.txt");
+	in >> *this;
+}
+
+std::ostream& operator<<(std::ostream& out, const Banco& obj)
+{
+	// Primeiro escreve o nome do banco
+	out << obj.nomeBanco << "\n";
+
+	//Começa escreve a lista de clientes
+	out << obj.clientes.size() << "\n";
+	for (auto i : obj.clientes) {
+		out << i << "\n";
+	}
+
+	//Escreve o vetor de contas
+	out << obj.contas.size() << "\n";
+	for (int i = 0; i < obj.contas.size(); i++) {
+		out << obj.contas[i] << "\n";
+	}
+	std::cout << std::endl;
+
+	return out;
+}
+
+std::istream& operator>>(std::istream& in, Banco& obj)
+{
+	//Primeiro pega o nome do banco
+	in >> obj.nomeBanco;
+
+	//Pega os clientes
+	int numClientes;
+	in >> numClientes;
+	for (int i = 0; i < numClientes; i++) {
+		Cliente* novo = new Cliente;
+		in >> *novo;
+		obj.clientes.push_back(*novo);
+		delete novo;
+	}
+
+	//Pega as contas
+	int numContas;
+	in >> numContas;
+	for (int i = 0; i < numContas; i++) {
+		Conta* nova = new Conta;
+		in >> *nova;
+		std::string cpf;
+		cpf = nova->getCliente().getCpfCnpj();
+
+		//Acha o endereço do cliente associado para colocar na conta corretamente
+		for (auto& i : obj.clientes) {
+			if (i.getCpfCnpj() == cpf) {
+				Cliente* novo = &i;
+				nova->setCliente(novo);
+			}
+		}
+
+		obj.contas.push_back(*nova);
+		delete nova;
+	}
+
+}

@@ -36,6 +36,11 @@ public:
 	const std::string& getNomeCliente() const;
 	void setNomeCliente(const std::string &nomeCliente);
 
+	//Write the member variables to stream objects
+	friend std::ostream& operator << (std::ostream& out, const Cliente& obj);
+
+	//Read data from stream object and fill it in member variables
+	friend std::istream& operator >> (std::istream& in, Cliente& obj);
 };
 
 #endif /* CLIENTE_H_ */
