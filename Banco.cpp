@@ -130,7 +130,7 @@ void Banco::cobrarTarifa() {
 void Banco::cobrarCPMF() {
 	for (int i = 0; i < contas.size(); i++) {
 
-			contas[i].debitar(15.0, "Tarifa");
+			contas[i].debitar(15.0, "TarifaErrada");
 			contas[i].debitar(contas[i].getSaldo()*0.038, "Tarifa");
 		}
 }
@@ -141,4 +141,61 @@ std::list<Cliente> Banco::clientesLista() {
 
 std::vector<Conta> Banco::contasLista() {
 	return contas;
+}
+
+void Banco::writeFile()
+{
+	std::ofstream out("banco.txt");
+	out << *this;
+}
+
+void Banco::readFile()
+{
+	std::ifstream in("banco.txt");
+	in >> *this;
+}
+
+std::ostream& operator<<(std::ostream& out, const Banco& obj)
+{
+	// Primeiro escreve o nome do banco
+	out << obj.nomeBanco << "\n";
+
+	//Começa escreve a lista de clientes
+	out << obj.clientes.size() << "\n";
+	for (auto i : obj.clientes) {
+		out << i << "\n";
+	}
+
+	//Escreve o vetor de contas
+	out << obj.contas.size() << "\n";
+	for (int i = 0; i < obj.contas.size(); i++) {
+		out << obj.contas[i] << "\n";
+	}
+	std::cout << std::endl;
+
+	return out;
+}
+
+std::istream& operator>>(std::istream& in, Banco& obj)
+{
+	//Primeiro pega o nome do banco
+	in >> obj.nomeBanco;
+
+	//Pega os clientes
+	int numClientes;
+	in >> numClientes;
+	for (int i = 0; i < numClientes; i++) {
+		Cliente *novo = new Cliente;
+		in >> *novo;
+		obj.clientes.push_back(*novo);
+	}
+
+	//Pega as contas
+	int numContas;
+	in >> numContas;
+	for (int i = 0; i < numContas; i++) {
+		Conta* nova = new Conta;
+		in >> *nova;
+		obj.contas.push_back(*nova);
+	}
 }

@@ -41,15 +41,30 @@ int main(int argc, char* argv[]){
 	//std::ifstream in("students.txt");
 	//in >> b;
 	//std::cout << b.getDescricao() << endl;
-	Conta a(new Cliente("Arthur", "061", "BH", "3296"));
-	a.creditar(138.0, "Teste");
-	a.creditar(300.0, "Teste2");
-	std::ofstream out("test.txt");
-	out << a;
+	//Conta a(new Cliente("Arthur", "061", "BH", "3296"));
+	//a.creditar(138.0, "Teste");
+	//a.creditar(300.0, "Teste2");
+	//std::ofstream out("test.txt");
+	//out << a;
 
-	Conta b;
-	std::ifstream in("test.txt");
-	in >> b;
+	//Conta b;
+	//std::ifstream in("test.txt");
+	//in >> b;
+
+	Banco itau("Itau");
+	itau.adicionaCliente(*new Cliente("Arthur", "061", "BH", "3296"));
+	itau.adicionaCliente(*new Cliente("Rafa", "123", "BH", "9873"));
+	itau.adicionaCliente(*new Cliente("Rafa2", "1234", "BH", "99873"));
+	itau.criarConta("061");
+	itau.criarConta("123");
+	itau.depositoConta(0, 300.0);
+	itau.depositoConta(1, 270.0);
+	itau.cobrarCPMF();
+	
+	itau.writeFile();
+
+	Banco b;
+	b.readFile();
 
 	return 0;
 }
