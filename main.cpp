@@ -51,6 +51,11 @@ int main(int argc, char* argv[]){
 	//std::ifstream in("test.txt");
 	//in >> b;
 
+	//i->getBanco().printContas();
+	//i->obterExtrato();
+	//i->getBanco().printContas();
+
+
 	Banco itau("Itau");
 	itau.adicionaCliente(*new Cliente("Arthur", "061", "BH", "3296"));
 	itau.adicionaCliente(*new Cliente("Rafa", "123", "BH", "9873"));
@@ -65,11 +70,6 @@ int main(int argc, char* argv[]){
 
 	Banco b;
 	b.readFile();
-	b.printContas();
-	b.printClientes();
-	for (auto& i : b.clientes) {
-		i.setEndereco("Mudou!");
-	}
 	b.printContas();
 	b.printClientes();
 	return 0;
