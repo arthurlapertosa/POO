@@ -28,7 +28,7 @@ public:
 	bool possuiConta(std::string cpf);
 
 	//Deleta um cliente PRECONDI��O: Cliente n�o possui conta
-	void deletaCliente(std::string cpf);
+	bool deletaCliente(std::string cpf);
 
 	//Printa a lista de clientes
 	void printClientes();
@@ -51,6 +51,18 @@ public:
 	void cobrarTarifa();
 
 	void cobrarCPMF();
+
+	//Retorna o saldo de uma conta
+	double obterSaldo (int numConta);
+
+	//Retorna o extrato do último mês de uma conta
+	std::vector<Movimentacao> obterExtratoMesAtual(int numConta);
+
+	//Retorna o extrato de uma conta desde a data inicial
+	std::vector<Movimentacao> obterExtrato(std::string dataIni, int numConta);
+
+	//Retorna o extrato de uma conta no período especificado
+	std::vector<Movimentacao> obterExtrato(std::string dataIni, std::string dataFim, int numConta);
 
 	//Obtem a lista de clientes
 	std::list<Cliente> clientesLista();

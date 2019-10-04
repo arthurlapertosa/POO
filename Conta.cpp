@@ -12,11 +12,11 @@
 
 int Conta::proximoNumConta;
 
-Conta::Conta()
-{
+Conta::Conta() {
 	this->saldo = 0.0;
 	this->numConta = Conta::proximoNumConta;
 	Conta::proximoNumConta++;
+	this->cliente = nullptr;
 }
 
 Conta::Conta(Cliente * clienteNovo) {
