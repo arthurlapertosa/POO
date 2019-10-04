@@ -30,8 +30,9 @@ Banco Interface::getBanco() {
 }
 
 void Interface::menu(){
+	this->banco.readFile();
 	while (1){
-		this->banco.readFile();
+
 		std::cout<< "\n--------- MENU ----------" << endl;
 		std::cout << "1. Cadastrar cliente" << endl;
 		std::cout << "2. Criar nova conta" << endl;
@@ -281,6 +282,10 @@ void Interface::depositar() {
 	std::replace(valorStr.begin(), valorStr.end(), ',', '.' );
 	try {
 		valor = stod(valorStr);
+		if (valor<=0) {
+			std::cout<<"Valor inválido." << endl;
+			return;
+		}
 	} catch (...) {
 		std::cout<<"Valor inválido." << endl;
 		return;
@@ -332,6 +337,10 @@ void Interface::sacar() {
 	std::replace(valorStr.begin(), valorStr.end(), ',', '.' );
 	try {
 		valor = stod(valorStr);
+		if (valor<=0) {
+			std::cout<<"Valor inválido." << endl;
+			return;
+		}
 	} catch (...) {
 		std::cout<<"Valor inválido." << endl;
 		return;
@@ -398,6 +407,10 @@ void Interface::transferir() {
 	std::replace(valorStr.begin(), valorStr.end(), ',', '.' );
 	try {
 		valor = stod(valorStr);
+		if (valor<=0) {
+			std::cout<<"Valor inválido." << endl;
+			return;
+		}
 	} catch (...) {
 		std::cout<<"Valor inválido." << endl;
 		return;
