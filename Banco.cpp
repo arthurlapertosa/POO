@@ -197,6 +197,8 @@ void Banco::readFile()
 {
 	std::ifstream in("banco.txt");
 	if (in.is_open()){
+		contas.clear();
+		clientes.clear();
 		in >> *this;
 	}
 }
