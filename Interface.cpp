@@ -47,7 +47,7 @@ void Interface::menu(){
 		std::cout << "11. Obter extrato" << endl;
 		std::cout << "12. Listar clientes" << endl;
 		std::cout << "13. Listar contas" << endl;
-		std::cout << "14. Sair" << endl;
+		std::cout << "14. Sair e salvar em arquivo" << endl;
 
 		std::string stropcao = "0";
 		int opcao = 0;

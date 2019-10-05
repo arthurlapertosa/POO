@@ -29,7 +29,7 @@ bool Banco::criarConta(std::string cpf) {
 bool Banco::possuiConta(std::string cpf) {
 	//Passa por todas as contas no banco
 	for (long unsigned int i = 0; i < contas.size(); i++) {
-		if (contas[i].getCliente().getCpfCnpj().compare(cpf) == 0) { //Achou o cliente
+		if (contas[i].getCliente().getCpfCnpj() == cpf) { //Achou o cliente
 			return true;
 		}
 	}
@@ -39,7 +39,7 @@ bool Banco::possuiConta(std::string cpf) {
 bool Banco::deletaCliente(std::string cpf) {
 	if (!possuiConta(cpf)) {
 		for (auto i = clientes.begin(); i != clientes.end(); i++) {
-			if (i->getCpfCnpj().compare(cpf) == 0) {
+			if (i->getCpfCnpj() == cpf) {
 				clientes.erase(i);
 				break;
 			}
@@ -197,6 +197,8 @@ void Banco::readFile()
 {
 	std::ifstream in("banco.txt");
 	if (in.is_open()){
+		contas.clear();
+		clientes.clear();
 		in >> *this;
 	}
 }
@@ -204,7 +206,9 @@ void Banco::readFile()
 std::ostream& operator<<(std::ostream& out, const Banco& obj)
 {
 	// Primeiro escreve o nome do banco
-	out << obj.nomeBanco << "\n";
+	string nomeBanco = obj.nomeBanco;
+	nomeBanco = replaceCharr(nomeBanco, ' ', '~');
+	out << nomeBanco << "\n";
 
 	//Começa escreve a lista de clientes
 	out << obj.clientes.size() << "\n";
@@ -214,7 +218,7 @@ std::ostream& operator<<(std::ostream& out, const Banco& obj)
 
 	//Escreve o vetor de contas
 	out << obj.contas.size() << "\n";
-	for (long unsigned int i = 0; i < obj.contas.size(); i++) {
+	for (int i = 0; i < obj.contas.size(); i++) {
 		out << obj.contas[i] << "\n";
 	}
 	std::cout << std::endl;
@@ -226,6 +230,7 @@ std::istream& operator>>(std::istream& in, Banco& obj)
 {
 	//Primeiro pega o nome do banco
 	in >> obj.nomeBanco;
+	obj.nomeBanco = replaceCharr(obj.nomeBanco, '~', ' ');
 
 	//Pega os clientes
 	int numClientes;
