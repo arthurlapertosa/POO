@@ -61,7 +61,15 @@ void Cliente::setNomeCliente(const std::string &nomeCliente) {
 
 std::ostream& operator<<(std::ostream& out, const Cliente& obj)
 {
-	out << obj.nomeCliente << "\n" << obj.cpf_cnpj << "\n" << obj.endereco << "\n" << obj.fone << std::endl;
+	std::string nomeCliente = obj.nomeCliente;
+	std::string cpf_cnpj = obj.cpf_cnpj;
+	std::string endereco = obj.endereco;
+	std::string fone = obj.fone;
+	nomeCliente = replaceCharr(nomeCliente, ' ', '~');
+	cpf_cnpj = replaceCharr(cpf_cnpj, ' ', '~');
+	endereco = replaceCharr(endereco, ' ', '~');
+	fone = replaceCharr(fone, ' ', '~');
+	out << nomeCliente << "\n" << cpf_cnpj << "\n" << endereco << "\n" << fone << std::endl;
 	return out;
 }
 
@@ -71,5 +79,19 @@ std::istream& operator>>(std::istream& in, Cliente& obj)
 	in >> obj.cpf_cnpj;
 	in >> obj.endereco;
 	in >> obj.fone;
+	obj.nomeCliente = replaceCharr(obj.nomeCliente, '~', ' ');
+	obj.cpf_cnpj = replaceCharr(obj.cpf_cnpj, '~', ' ');
+	obj.endereco = replaceCharr(obj.endereco, '~', ' ');
+	obj.fone = replaceCharr(obj.fone, '~', ' ');
 	return in;
+}
+
+string replaceCharr(string str, char ch1, char ch2)
+{
+	for (int i = 0; i < str.length(); ++i) {
+		if (str[i] == ch1)
+			str[i] = ch2;
+	}
+
+	return str;
 }

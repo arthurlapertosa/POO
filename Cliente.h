@@ -43,4 +43,6 @@ public:
 	friend std::istream& operator >> (std::istream& in, Cliente& obj);
 };
 
+string replaceCharr(string str, char ch1, char ch2);
+
 #endif /* CLIENTE_H_ */
