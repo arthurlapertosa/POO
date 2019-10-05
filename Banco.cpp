@@ -196,7 +196,9 @@ void Banco::writeFile()
 void Banco::readFile()
 {
 	std::ifstream in("banco.txt");
-	in >> *this;
+	if (in.is_open()){
+		in >> *this;
+	}
 }
 
 std::ostream& operator<<(std::ostream& out, const Banco& obj)

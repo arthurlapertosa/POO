@@ -597,7 +597,7 @@ void Interface::printarExtrato(vector<Movimentacao> extrato) {
 	//variaveis para converter time_t para string
 	time_t seconds;
 	tm * curr_tm;
-	char date_string[10];
+	char date_string[100];
 	//percorre o vector de extrato para printar na tela
 	for(std::size_t j=0; j< extrato.size(); j++) {
 
