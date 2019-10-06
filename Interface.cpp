@@ -608,9 +608,8 @@ void Interface::printarExtrato(vector<Movimentacao> extrato) {
 
 		//convert time_t to string
 		seconds = extrato[j].getDataMov();
-		time(&seconds);
 		curr_tm = localtime(&seconds);
-		strftime(date_string, 50, "%d/%m/%Y %H:%M", curr_tm);
+		strftime(date_string, 100, "%d/%m/%Y %H:%M", curr_tm);
 		std::string s(date_string);
 
 		std::cout << date_string;
