@@ -26,7 +26,7 @@ bool Banco::criarConta(std::string cpf, std::string tipo, double limite) {
 				Conta * c = new ContaPoupanca(novo);
 			}
 
-			contas.push_back(*c);
+			contas.push_back(c);
 			return true;
 		}
 	}
@@ -37,7 +37,7 @@ bool Banco::criarConta(std::string cpf, std::string tipo, double limite) {
 bool Banco::possuiConta(std::string cpf) {
 	//Passa por todas as contas no banco
 	for (long unsigned int i = 0; i < contas.size(); i++) {
-		if (contas[i].getCliente().getCpfCnpj() == cpf) { //Achou o cliente
+		if (contas[i]->getCliente().getCpfCnpj() == cpf) { //Achou o cliente
 			return true;
 		}
 	}
@@ -69,8 +69,8 @@ void Banco::printClientes() {
 
 void Banco::printContas() {
 	for (long unsigned int i = 0; i < contas.size(); i++) {
-		std::cout <<"Numero da conta: " << contas[i].getNumConta() << ", Saldo: " << contas[i].getSaldo() << ", CPF do titular: " << contas[i].getCliente().getCpfCnpj()
-			<< ", Nome do titular: " << contas[i].getCliente().getNomeCliente() << ", Endereco: " << contas[i].getCliente().getEndereco() << std::endl;
+		std::cout <<"Numero da conta: " << contas[i]->getNumConta() << ", Saldo: " << contas[i]->getSaldo() << ", CPF do titular: " << contas[i]->getCliente().getCpfCnpj()
+			<< ", Nome do titular: " << contas[i]->getCliente().getNomeCliente() << ", Endereco: " << contas[i]->getCliente().getEndereco() << std::endl;
 	}
 	std::cout << std::endl;
 }
@@ -78,7 +78,7 @@ void Banco::printContas() {
 void Banco::deleteConta(int numConta) {
 	//Passa por todas as contas
 	for (long unsigned int i = 0; i < contas.size(); i++) {
-		if (contas[i].getNumConta() == numConta) { //Achou a conta
+		if (contas[i]->getNumConta() == numConta) { //Achou a conta
 			contas.erase(contas.begin() + i);
 			break;
 		}
@@ -88,8 +88,8 @@ void Banco::deleteConta(int numConta) {
 void Banco::depositoConta(int numConta, double valor) {
 	//Passa por todas as contas
 	for (long unsigned int i = 0; i < contas.size(); i++) {
-		if (contas[i].getNumConta() == numConta) { //Achou a conta
-			contas[i].creditar(valor, "Deposito");
+		if (contas[i]->getNumConta() == numConta) { //Achou a conta
+			contas[i]->creditar(valor, "Deposito");
 			break;
 		}
 	}
@@ -99,8 +99,8 @@ bool Banco::saqueConta(int numConta, double valor) {
 	bool saqueRealizado = false;
 	//Passa por todas as contas
 	for (long unsigned int i = 0; i < contas.size(); i++) {
-		if (contas[i].getNumConta() == numConta) { //Achou a conta
-			if (contas[i].debitar(valor, "Saque")) {
+		if (contas[i]->getNumConta() == numConta) { //Achou a conta
+			if (contas[i]->debitar(valor, "Saque")) {
 				saqueRealizado = true;
 			}
 			break;
@@ -115,11 +115,11 @@ bool Banco::transferencia(int numContaOrigem, int numContaDestino, double valor)
 
 	bool transferenciaRealizada = false;
 	for (long unsigned int i = 0; i < contas.size(); i++) {
-		if (contas[i].getNumConta() == numContaOrigem) { //Achou a conta
+		if (contas[i]->getNumConta() == numContaOrigem) { //Achou a conta
 			for (long unsigned int j = 0; j < contas.size(); j++) {
-				if (contas[j].getNumConta() == numContaDestino) {
-					if (contas[i].debitar(valor, "Transferencia (Origem)")) {
-						contas[j].creditar(valor, "Transferencia (Destino)");
+				if (contas[j]->getNumConta() == numContaDestino) {
+					if (contas[i]->debitar(valor, "Transferencia (Origem)")) {
+						contas[j]->creditar(valor, "Transferencia (Destino)");
 						transferenciaRealizada = true;
 					}
 					break;
@@ -136,8 +136,8 @@ bool Banco::transferencia(int numContaOrigem, int numContaDestino, double valor)
 double Banco::obterSaldo (int numConta) {
 	double saldo;
 	for (long unsigned int i = 0; i < contas.size(); i++) {
-		if (contas[i].getNumConta() == numConta) { //Achou a conta
-			saldo = contas[i].getSaldo();
+		if (contas[i]->getNumConta() == numConta) { //Achou a conta
+			saldo = contas[i]->getSaldo();
 		}
 	}
 	return saldo;
@@ -147,8 +147,8 @@ std::vector<Movimentacao> Banco::obterExtratoMesAtual(int numConta){
 	vector<Movimentacao> extrato;
 	for (long unsigned int i = 0; i < contas.size(); i++) {
 
-		if (contas[i].getNumConta() == numConta) { //Achou a conta
-			extrato = contas[i].obterExtratoMesAtual();
+		if (contas[i]->getNumConta() == numConta) { //Achou a conta
+			extrato = contas[i]->obterExtratoMesAtual();
 		}
 	}
 
@@ -158,8 +158,8 @@ std::vector<Movimentacao> Banco::obterExtratoMesAtual(int numConta){
 std::vector<Movimentacao> Banco::obterExtrato(std::string dataIni, int numConta){
 	vector<Movimentacao> extrato;
 	for (long unsigned int i = 0; i < contas.size(); i++) {
-		if (contas[i].getNumConta() == numConta) { //Achou a conta
-			extrato = contas[i].obterExtrato(dataIni);
+		if (contas[i]->getNumConta() == numConta) { //Achou a conta
+			extrato = contas[i]->obterExtrato(dataIni);
 		}
 	}
 	return extrato;
@@ -168,8 +168,8 @@ std::vector<Movimentacao> Banco::obterExtrato(std::string dataIni, int numConta)
 std::vector<Movimentacao> Banco::obterExtrato(std::string dataIni, std::string dataFim, int numConta){
 	vector<Movimentacao> extrato;
 	for (long unsigned int i = 0; i < contas.size(); i++) {
-		if (contas[i].getNumConta() == numConta) { //Achou a conta
-			extrato = contas[i].obterExtrato(dataIni, dataFim);
+		if (contas[i]->getNumConta() == numConta) { //Achou a conta
+			extrato = contas[i]->obterExtrato(dataIni, dataFim);
 		}
 	}
 	return extrato;
@@ -177,13 +177,13 @@ std::vector<Movimentacao> Banco::obterExtrato(std::string dataIni, std::string d
 
 void Banco::cobrarTarifa() {
 	for (long unsigned int i = 0; i < this->contas.size(); i++) {
-		this->contas[i].debitar(15.0, "Tarifa");
+		this->contas[i]->debitar(15.0, "Tarifa");
 	}
 }
 
 void Banco::cobrarCPMF() {
 	for (long unsigned int i = 0; i < contas.size(); i++) {
-		contas[i].debitar(contas[i].getSaldo()*0.038, "Tarifa");
+		contas[i]->debitar(contas[i]->getSaldo()*0.038, "Tarifa");
 	}
 }
 
@@ -191,7 +191,7 @@ std::list<Cliente> Banco::clientesLista() {
 	return clientes;
 }
 
-std::vector<Conta> Banco::contasLista() {
+std::vector<Conta*> Banco::contasLista() {
 	return contas;
 }
 

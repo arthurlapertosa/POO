@@ -4,6 +4,7 @@
 #include "Conta.h"
 #include <list>
 #include <fstream>
+#include "ContaCorrente.h"
 
 using namespace std;
 
@@ -11,7 +12,7 @@ class Banco {
 private:
 	std::string nomeBanco;
 	std::list<Cliente> clientes;
-	std::vector<Conta> contas;
+	std::vector<Conta*> contas;
 
 public:
 	//Cria um banco com o nome "nomeB"
@@ -68,7 +69,7 @@ public:
 	std::list<Cliente> clientesLista();
 
 	//Obtem a lista de contas
-	std::vector<Conta> contasLista();
+	std::vector<Conta*> contasLista();
 
 	//Escreve os dados no arquivo
 	void writeFile();

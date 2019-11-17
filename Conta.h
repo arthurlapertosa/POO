@@ -30,20 +30,20 @@ public:
 
 	//getters and setters
 	virtual const Cliente& getCliente() const = 0;
-	virtual const std::vector<Movimentacao> getMovimentacoes() = 0;
-	virtual int getNumConta() const = 0;
+	virtual const std::vector<Movimentacao> getMovimentacoes();
+	virtual int getNumConta() const;
 	//static int getProximoNumConta();
-	virtual double getSaldo() const = 0;
+	virtual double getSaldo() const;
 
 	//Seta o ponteiro pro cliente
-	virtual void setCliente(Cliente *newCliente) = 0;
+	virtual void setCliente(Cliente *newCliente);
 
 	//methods
-	virtual bool debitar(double valor, std::string descricao) = 0;
-	virtual void creditar(double valor, std::string descricao) = 0;
-	virtual vector<Movimentacao> obterExtrato(std::string dataIni, std::string dataFim) = 0;
-	virtual vector<Movimentacao> obterExtrato(std::string dataIni) = 0;
-	virtual vector<Movimentacao> obterExtratoMesAtual() = 0;
+	virtual bool debitar(double valor, std::string descricao);
+	virtual void creditar(double valor, std::string descricao);
+	virtual vector<Movimentacao> obterExtrato(std::string dataIni, std::string dataFim);
+	virtual vector<Movimentacao> obterExtrato(std::string dataIni);
+	virtual vector<Movimentacao> obterExtratoMesAtual();
 
 //	//Write the member variables to stream objects
 //	virtual friend std::ostream& operator << (std::ostream& out, const Conta& obj);

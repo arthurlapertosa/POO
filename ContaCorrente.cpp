@@ -36,6 +36,49 @@ bool ContaCorrente::debitar(double valor, std::string descricao) {
 	return transacaorealizada;
 }
 
+const Cliente& ContaCorrente::getCliente() const
+{
+	return *cliente;
+}
+
+const std::vector<Movimentacao> ContaCorrente::getMovimentacoes()
+{
+	return std::vector<Movimentacao>();
+}
+
+int ContaCorrente::getNumConta() const
+{
+	return 0;
+}
+
+double ContaCorrente::getSaldo() const
+{
+	return 0.0;
+}
+
+void ContaCorrente::setCliente(Cliente* newCliente)
+{
+}
+
+void ContaCorrente::creditar(double valor, std::string descricao)
+{
+}
+
+vector<Movimentacao> ContaCorrente::obterExtrato(std::string dataIni, std::string dataFim)
+{
+	return vector<Movimentacao>();
+}
+
+vector<Movimentacao> ContaCorrente::obterExtrato(std::string dataIni)
+{
+	return vector<Movimentacao>();
+}
+
+vector<Movimentacao> ContaCorrente::obterExtratoMesAtual()
+{
+	return vector<Movimentacao>();
+}
+
 double ContaCorrente::getLimiteCredito() {
 	return this->limiteCredito;
 }
