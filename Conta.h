@@ -13,7 +13,7 @@
 #include <vector>
 
 class Conta {
-private:
+protected:
 	int numConta;
 	double saldo;
 	Cliente *cliente;
@@ -29,27 +29,27 @@ public:
 	//Conta(const Conta &other);
 
 	//getters and setters
-	const Cliente& getCliente() const;
-	const std::vector<Movimentacao> getMovimentacoes();
-	int getNumConta() const;
+	virtual const Cliente& getCliente() const = 0;
+	virtual const std::vector<Movimentacao> getMovimentacoes() = 0;
+	virtual int getNumConta() const = 0;
 	//static int getProximoNumConta();
-	double getSaldo() const;
+	virtual double getSaldo() const = 0;
 
 	//Seta o ponteiro pro cliente
-	void setCliente(Cliente *newCliente);
+	virtual void setCliente(Cliente *newCliente) = 0;
 
 	//methods
-	bool debitar(double valor, std::string descricao);
-	void creditar(double valor, std::string descricao);
-	vector<Movimentacao> obterExtrato(std::string dataIni, std::string dataFim);
-	vector<Movimentacao> obterExtrato(std::string dataIni);
-	vector<Movimentacao> obterExtratoMesAtual();
+	virtual bool debitar(double valor, std::string descricao) = 0;
+	virtual void creditar(double valor, std::string descricao) = 0;
+	virtual vector<Movimentacao> obterExtrato(std::string dataIni, std::string dataFim) = 0;
+	virtual vector<Movimentacao> obterExtrato(std::string dataIni) = 0;
+	virtual vector<Movimentacao> obterExtratoMesAtual() = 0;
 
-	//Write the member variables to stream objects
-	friend std::ostream& operator << (std::ostream& out, const Conta& obj);
-
-	//Read data from stream object and fill it in member variables
-	friend std::istream& operator >> (std::istream& in, Conta& obj);
+//	//Write the member variables to stream objects
+//	virtual friend std::ostream& operator << (std::ostream& out, const Conta& obj);
+//
+//	//Read data from stream object and fill it in member variables
+//	virtual friend std::istream& operator >> (std::istream& in, Conta& obj);
 };
 
 #endif /* CONTA_H_ */

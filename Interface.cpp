@@ -158,7 +158,48 @@ void Interface::cadastrarCliente(){
 
 void Interface::criarConta(){
     std::cout<< "\n--------- CRIAR CONTA ----------" << endl;
+
+	//poupanca ou corrente?
+	std::string tipo;
+
+	std::cout<<"\n1. Conta poupanca" << endl;
+	std::cout<<"2. Conta corrente" << endl;
+	getline(cin, tipo);
+
+
+	while (tipo != "1" && tipo != "2"){
+		std::cout << "Escolha uma opção válida: ";
+		getline(cin, tipo);
+	}
+	if (tipo == "1") {
+		tipo = "P";
+	} else {
+		tipo = "C";
+	}
+
+	//limite da conta
+	std::string limiteStr;
+	double limite;
+
+	if (tipo == "C") {
+		std::cout<<"Insira valor do limite da conta: ";
+		getline(cin, limiteStr);
+		//substitui virgula por ponto quando necessário
+		std::replace(limiteStr.begin(), limiteStr.end(), ',', '.' );
+		try {
+			limite = stod(limiteStr);
+			if (limite<=0) {
+				std::cout<<"Valor inválido." << endl;
+				return;
+			}
+		} catch (...) {
+			std::cout<<"Valor inválido." << endl;
+			return;
+		}
+	}
+
 	this->printarClientes();
+
 
 	//pega o cpf/cnpj para associar o cliente a conta
 	std::string cpf_cnpj;
@@ -166,12 +207,13 @@ void Interface::criarConta(){
 	getline(cin, cpf_cnpj);
 	bool found = false;
 
+
 	//for para percorrer o list de cliente e saber se o cpf/cnpj digitado e valido
 	for (auto i : this->banco.clientesLista()) {
 		if (cpf_cnpj.compare(i.getCpfCnpj()) == 0) {
 			found = true;
 			//chama a funcao pra criar a conta
-			this->banco.criarConta(cpf_cnpj);
+			this->banco.criarConta(cpf_cnpj, tipo, limite);
 		}
 	}
 

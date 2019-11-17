@@ -22,7 +22,7 @@ public:
 	void adicionaCliente(Cliente& novo);
 
 	//Cria uma nova conta retorna true se criado e false se não criado
-	bool criarConta(std::string cpf);
+	bool criarConta(std::string cpf, std::string tipo, double limite);
 
 	//Checa se o cliente tem alguma conta
 	bool possuiConta(std::string cpf);
@@ -76,11 +76,11 @@ public:
 	//Lê os dados no arquivo
 	void readFile();
 
-	//Write the member variables to stream objects
-	friend std::ostream& operator << (std::ostream& out, const Banco& obj);
-
-	//Read data from stream object and fill it in member variables
-	friend std::istream& operator >> (std::istream& in, Banco& obj);
+//	//Write the member variables to stream objects
+//	friend std::ostream& operator << (std::ostream& out, const Banco& obj);
+//
+//	//Read data from stream object and fill it in member variables
+//	friend std::istream& operator >> (std::istream& in, Banco& obj);
 };
 
 #endif // BANCO_H

@@ -1,4 +1,6 @@
 #include "Banco.h"
+#include "ContaCorrente.h"
+#include "ContaPoupanca.h"
 
 Banco::Banco() {
 
@@ -12,13 +14,19 @@ void Banco::adicionaCliente(Cliente& novo) {
 	clientes.push_back(novo);
 }
 
-bool Banco::criarConta(std::string cpf) {
-	//passa pelos clientes at� achar o cliente com o cpf
+bool Banco::criarConta(std::string cpf, std::string tipo, double limite) {
+	//passa pelos clientes ate achar o cliente com o cpf
 	for (auto &i : clientes) {
 		if (i.getCpfCnpj() == cpf) {
 			Cliente* novo = &i;
-			Conta* conta = new Conta(novo);
-			contas.push_back(*conta);
+
+			Conta * c = new ContaCorrente(novo, limite);
+
+			if (tipo == "P") {
+				Conta * c = new ContaPoupanca(novo);
+			}
+
+			contas.push_back(*c);
 			return true;
 		}
 	}
@@ -189,78 +197,78 @@ std::vector<Conta> Banco::contasLista() {
 
 void Banco::writeFile()
 {
-	std::ofstream out("banco.txt");
-	out << *this;
+//	std::ofstream out("banco.txt");
+//	out << *this;
 }
 
 void Banco::readFile()
 {
-	std::ifstream in("banco.txt");
-	if (in.is_open()){
-		contas.clear();
-		clientes.clear();
-		in >> *this;
-	}
+//	std::ifstream in("banco.txt");
+//	if (in.is_open()){
+//		contas.clear();
+//		clientes.clear();
+//		in >> *this;
+//	}
 }
+//
+//std::ostream& operator<<(std::ostream& out, const Banco& obj)
+//{
+//	// Primeiro escreve o nome do banco
+//	string nomeBanco = obj.nomeBanco;
+//	nomeBanco = replaceCharr(nomeBanco, ' ', '~');
+//	out << nomeBanco << "\n";
+//
+//	//Começa escreve a lista de clientes
+//	out << obj.clientes.size() << "\n";
+//	for (auto i : obj.clientes) {
+//		out << i << "\n";
+//	}
+//
+//	//Escreve o vetor de contas
+//	out << obj.contas.size() << "\n";
+//	for (int i = 0; i < obj.contas.size(); i++) {
+//		out << obj.contas[i] << "\n";
+//	}
+//	std::cout << std::endl;
+//
+//	return out;
+//}
 
-std::ostream& operator<<(std::ostream& out, const Banco& obj)
-{
-	// Primeiro escreve o nome do banco
-	string nomeBanco = obj.nomeBanco;
-	nomeBanco = replaceCharr(nomeBanco, ' ', '~');
-	out << nomeBanco << "\n";
-
-	//Começa escreve a lista de clientes
-	out << obj.clientes.size() << "\n";
-	for (auto i : obj.clientes) {
-		out << i << "\n";
-	}
-
-	//Escreve o vetor de contas
-	out << obj.contas.size() << "\n";
-	for (int i = 0; i < obj.contas.size(); i++) {
-		out << obj.contas[i] << "\n";
-	}
-	std::cout << std::endl;
-
-	return out;
-}
-
-std::istream& operator>>(std::istream& in, Banco& obj)
-{
-	//Primeiro pega o nome do banco
-	in >> obj.nomeBanco;
-	obj.nomeBanco = replaceCharr(obj.nomeBanco, '~', ' ');
-
-	//Pega os clientes
-	int numClientes;
-	in >> numClientes;
-	for (int i = 0; i < numClientes; i++) {
-		Cliente* novo = new Cliente;
-		in >> *novo;
-		obj.clientes.push_back(*novo);
-		delete novo;
-	}
-
-	//Pega as contas
-	int numContas;
-	in >> numContas;
-	for (int i = 0; i < numContas; i++) {
-		Conta* nova = new Conta;
-		in >> *nova;
-		std::string cpf;
-		cpf = nova->getCliente().getCpfCnpj();
-
-		//Acha o endereço do cliente associado para colocar na conta corretamente
-		for (auto& i : obj.clientes) {
-			if (i.getCpfCnpj() == cpf) {
-				Cliente* novo = &i;
-				nova->setCliente(novo);
-			}
-		}
-
-		obj.contas.push_back(*nova);
-		delete nova;
-	}
-
-}
+//std::istream& operator>>(std::istream& in, Banco& obj)
+//{
+//	//Primeiro pega o nome do banco
+//	in >> obj.nomeBanco;
+//	obj.nomeBanco = replaceCharr(obj.nomeBanco, '~', ' ');
+//
+//	//Pega os clientes
+//	int numClientes;
+//	in >> numClientes;
+//	for (int i = 0; i < numClientes; i++) {
+//		Cliente* novo = new Cliente;
+//		in >> *novo;
+//		obj.clientes.push_back(*novo);
+//		delete novo;
+//	}
+//
+//	//Pega as contas
+//	int numContas;
+//	in >> numContas;
+//	for (int i = 0; i < numContas; i++) {
+//		Conta* nova = new Conta;
+//		in >> *nova;
+//		std::string cpf;
+//		cpf = nova->getCliente().getCpfCnpj();
+//
+//		//Acha o endereço do cliente associado para colocar na conta corretamente
+//		for (auto& i : obj.clientes) {
+//			if (i.getCpfCnpj() == cpf) {
+//				Cliente* novo = &i;
+//				nova->setCliente(novo);
+//			}
+//		}
+//
+//		obj.contas.push_back(*nova);
+//		delete nova;
+//	}
+//
+//}
