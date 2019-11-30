@@ -118,8 +118,8 @@ void Interface::menu(){
 void Interface::printarContas() {
 	std:: cout << "\nLista de Contas" << endl;
 	for (long unsigned int i = 0; i < banco.contasLista().size(); i++) {
-		std::cout <<"Numero da conta: " << banco.contasLista()[i].getNumConta() << ", Saldo: " << banco.contasLista()[i].getSaldo() << ", CPF do titular: " << banco.contasLista()[i].getCliente().getCpfCnpj()
-				<< ", Nome do titular: " << banco.contasLista()[i].getCliente().getNomeCliente() << std::endl;
+		std::cout <<"Numero da conta: " << banco.contasLista()[i]->getNumConta() << ", Saldo: " << banco.contasLista()[i]->getSaldo() << ", CPF do titular: " << banco.contasLista()[i]->getCliente().getCpfCnpj()
+				<< ", Nome do titular: " << banco.contasLista()[i]->getCliente().getNomeCliente() << ", Tipo da conta: " << banco.contasLista()[i]->type() << std::endl;
 	}
 }
 
@@ -157,8 +157,50 @@ void Interface::cadastrarCliente(){
 }
 
 void Interface::criarConta(){
+	try{
     std::cout<< "\n--------- CRIAR CONTA ----------" << endl;
+
+	//poupanca ou corrente?
+	std::string tipo;
+
+	std::cout<<"\n1. Conta poupanca" << endl;
+	std::cout<<"2. Conta corrente" << endl;
+	getline(cin, tipo);
+
+
+	while (tipo != "1" && tipo != "2"){
+		std::cout << "Escolha uma opção válida: ";
+		getline(cin, tipo);
+	}
+	if (tipo == "1") {
+		tipo = "P";
+	} else {
+		tipo = "C";
+	}
+
+	//limite da conta
+	std::string limiteStr;
+	double limite = 0;
+
+	if (tipo == "C") {
+		std::cout<<"Insira valor do limite da conta: ";
+		getline(cin, limiteStr);
+		//substitui virgula por ponto quando necessário
+		std::replace(limiteStr.begin(), limiteStr.end(), ',', '.' );
+		try {
+			limite = stod(limiteStr);
+			if (limite<=0) {
+				std::cout<<"Valor inválido." << endl;
+				return;
+			}
+		} catch (...) {
+			std::cout<<"Valor inválido." << endl;
+			return;
+		}
+	}
+
 	this->printarClientes();
+
 
 	//pega o cpf/cnpj para associar o cliente a conta
 	std::string cpf_cnpj;
@@ -166,23 +208,26 @@ void Interface::criarConta(){
 	getline(cin, cpf_cnpj);
 	bool found = false;
 
+
 	//for para percorrer o list de cliente e saber se o cpf/cnpj digitado e valido
 	for (auto i : this->banco.clientesLista()) {
-		if (cpf_cnpj.compare(i.getCpfCnpj()) == 0) {
+		if (cpf_cnpj == i.getCpfCnpj()) {
 			found = true;
 			//chama a funcao pra criar a conta
-			this->banco.criarConta(cpf_cnpj);
+			this->banco.criarConta(cpf_cnpj, tipo, limite);
 		}
 	}
 
 	//if para disparar a mensagem pro usuário da execucao da funcao
 	if (found == false) {
-		std::cout<<"\nCPF/CNPJ nao encontrado. Não foi possível criar a conta."<< endl;
+		throw Erro("CPF/CNPJ nao encontrado. Não foi possível criar a conta.");
 	} else {
 	    std::cout << "\nConta criada com sucesso." << endl;
 	}
-
-
+}
+	catch (Erro & e) {
+		std::cout << e.what() << std::endl;
+	}
 }
 
 void Interface::excluirCliente(){
@@ -241,7 +286,7 @@ void Interface::excluirConta(){
 
 	//for para percorrer o vector de conta e saber se o num da conta digitado e valido
 	for(std::size_t i=0; i< this->banco.contasLista().size(); i++) {
-		if (numConta == this->banco.contasLista()[i].getNumConta()) {
+		if (numConta == this->banco.contasLista()[i]->getNumConta()) {
 			found = true;
 			this->banco.deleteConta(numConta);
 		}
@@ -295,7 +340,7 @@ void Interface::depositar() {
 
 	//for para percorrer o vector de conta e saber se o num da conta digitado e valido
 	for(std::size_t i=0; i< this->banco.contasLista().size(); i++) {
-		if (numConta == this->banco.contasLista()[i].getNumConta()) {
+		if (numConta == this->banco.contasLista()[i]->getNumConta()) {
 			found = true;
 			//chama a funcao pra depositar na conta
 			this->banco.depositoConta(numConta, valor);
@@ -350,7 +395,7 @@ void Interface::sacar() {
 
 	//for para percorrer o vector de conta e saber se o num da conta digitado e valido
 	for(std::size_t i=0; i< this->banco.contasLista().size(); i++) {
-		if (numConta == this->banco.contasLista()[i].getNumConta()) {
+		if (numConta == this->banco.contasLista()[i]->getNumConta()) {
 			found = true;
 			//verifica se o saldo e suficiente para fazer o saque
 			if (!this->banco.saqueConta(numConta, valor)) {
@@ -460,7 +505,7 @@ void Interface::obterSaldo() {
 
 	//for para percorrer o vector de conta e saber se o num da conta digitado e valido
 	for(std::size_t i=0; i< this->banco.contasLista().size(); i++) {
-		if (numConta == this->banco.contasLista()[i].getNumConta()) {
+		if (numConta == this->banco.contasLista()[i]->getNumConta()) {
 			found = true;
 			std::cout << "\nSaldo: ";
 			//chama funcao para obter saldo
@@ -519,7 +564,7 @@ void Interface::obterExtrato() {
 
 	//for para percorrer o vector de conta e saber se o num da conta digitado e valido
 	for(std::size_t i=0; i< this->banco.contasLista().size(); i++) {
-		if (numConta == this->banco.contasLista()[i].getNumConta()) {
+		if (numConta == this->banco.contasLista()[i]->getNumConta()) {
 			found = true;
 			vector<Movimentacao> extrato;
 			std::string dataIniStr;

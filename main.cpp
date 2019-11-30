@@ -15,11 +15,11 @@ using namespace std;
 
 int main(int argc, char* argv[]){
 
-	Banco *b = new Banco("Inter");
-	Interface *i = new Interface(*b);
+	 Banco *b = new Banco("Inter");
+	 Interface *i = new Interface(*b);
 
-	i->menu();
+	 i->menu();
 
 
-	return 0;
+	 return 0;
 }
