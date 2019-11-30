@@ -584,10 +584,10 @@ void Interface::obterExtrato() {
 				cin >> dataIniStr;
 				cin.ignore();
 
-				//if (strptime(dataIniStr.c_str(), "%d/%m/%Y", &result) == NULL) {
-				//	std::cout << "\nData inválida. " << endl;
-				//	return;
-				//}
+				if (strptime(dataIniStr.c_str(), "%d/%m/%Y", &result) == NULL) {
+					std::cout << "\nData inválida. " << endl;
+					return;
+				}
 
 				extrato = this->banco.obterExtrato(dataIniStr, numConta);
 
@@ -600,19 +600,19 @@ void Interface::obterExtrato() {
 				cin >> dataIniStr;
 				cin.ignore();
 
-				//if (strptime(dataIniStr.c_str(), "%d/%m/%Y", &result) == NULL) {
-				//	std::cout << "\nData inválida. " << endl;
-				//	return;
-				//}
+				if (strptime(dataIniStr.c_str(), "%d/%m/%Y", &result) == NULL) {
+					std::cout << "\nData inválida. " << endl;
+					return;
+				}
 
 				std::cout<<"Insira a data final (formato dd/mm/yyyy): ";
 				cin >> dataFimStr;
 				cin.ignore();
 
-				//if (strptime(dataIniStr.c_str(), "%d/%m/%Y", &result) == NULL) {
-				//	std::cout << "\nData inválida. " << endl;
-				//	return;
-				//}
+				if (strptime(dataIniStr.c_str(), "%d/%m/%Y", &result) == NULL) {
+					std::cout << "\nData inválida. " << endl;
+					return;
+				}
 
 			    std::cout<< "\n--------- EXTRATO PERÍODO PASSADO ---------" << endl;
 

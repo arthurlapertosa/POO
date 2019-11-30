@@ -256,40 +256,29 @@ std::istream& operator>>(std::istream& in, Banco& obj)
 	in >> numContas;
 	for (int i = 0; i < numContas; i++) {
 		in >> tipo;
+		Conta* nova;
 		if (tipo == "C")
 		{
-			ContaCorrente* nova = new ContaCorrente;
-			in >> *nova;
+			nova = new ContaCorrente;
 
-			std::string cpf;
-			cpf = nova->getCliente().getCpfCnpj();
-
-			//Acha o endereço do cliente associado para colocar na conta corretamente
-			for (auto& i : obj.clientes) {
-				if (i.getCpfCnpj() == cpf) {
-					Cliente* novo = &i;
-					nova->setCliente(novo);
-				}
-			}
-			obj.contas.push_back(nova);
 		}
-		else if(tipo == "P")
+		else
 		{
-			ContaPoupanca* nova = new ContaPoupanca;
-			in >> *nova;
-
-			std::string cpf;
-			cpf = nova->getCliente().getCpfCnpj();
-
-			//Acha o endereço do cliente associado para colocar na conta corretamente
-			for (auto& i : obj.clientes) {
-				if (i.getCpfCnpj() == cpf) {
-					Cliente* novo = &i;
-					nova->setCliente(novo);
-				}
-			}
-			obj.contas.push_back(nova);
+			nova = new ContaPoupanca;
 		}
+
+		nova->read(in);
+		std::string cpf;
+		cpf = nova->getCliente().getCpfCnpj();
+
+		//Acha o endereço do cliente associado para colocar na conta corretamente
+		for (auto& i : obj.clientes) {
+			if (i.getCpfCnpj() == cpf) {
+				Cliente* novo = &i;
+				nova->setCliente(novo);
+			}
+		}
+		obj.contas.push_back(nova);
 	}
 	return in;
 }
