@@ -13,18 +13,20 @@
 #include "Erro.h"
 #include "SaldoDiaBase.h"
 class ContaPoupanca: public Conta {
-
-	SaldoDiaBase* saldoDiaB;
+protected:
+	vector<SaldoDiaBase> saldoDiaB;
 
 public:
 	ContaPoupanca();
 	ContaPoupanca(Cliente * clienteNovo);
 	virtual ~ContaPoupanca();
-	ContaPoupanca(const ContaPoupanca &other);
 
 	bool debitar(double valor, std::string descricao) override;
 	//methods
 	void creditar(double valor, std::string descricao) override;
+
+	void adicionaElemento(SaldoDiaBase &novo );
+	void removeElemento(int elemento);
 
 	//Write the member variables to stream objects
 	friend std::ostream& operator << (std::ostream& out, const ContaPoupanca& obj);

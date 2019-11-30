@@ -12,3 +12,21 @@ std::istream& operator>>(std::istream& in, SaldoDiaBase& obj)
 	in >> obj.saldoDiaBase;
 	return in;
 }
+
+int SaldoDiaBase::getDiaBase() {
+	return this->diaBase;
+
+}
+
+double SaldoDiaBase::getSaldoDiaBase() {
+	return this->saldoDiaBase;
+}
+
+void SaldoDiaBase::setDiaBase(int diaBase) {
+	this->diaBase = diaBase;
+}
+
+void SaldoDiaBase::setSaldoDiaBase(double saldoDiaBase) {
+	this->saldoDiaBase = saldoDiaBase;
+}
+
