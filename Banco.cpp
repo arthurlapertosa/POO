@@ -19,18 +19,18 @@ bool Banco::criarConta(std::string cpf, std::string tipo, double limite) {
 	for (auto &i : clientes) {
 		if (i.getCpfCnpj() == cpf) {
 			Cliente* novo = &i;
-
-			Conta * c = new ContaCorrente(novo, limite);
-
-			if (tipo == "P") {
-				Conta * c = new ContaPoupanca(novo);
+			Conta* c;
+			if(tipo == "C"){
+				c = new ContaCorrente(novo, limite);
 			}
-
+			else if (tipo == "P") {
+				c = new ContaPoupanca(novo);
+			}
 			contas.push_back(c);
 			return true;
 		}
 	}
-	return false;
+	throw Erro("Cliente não existente");
 	
 }
 

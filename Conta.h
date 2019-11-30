@@ -29,7 +29,7 @@ public:
 	//Conta(const Conta &other);
 
 	//getters and setters
-	virtual const Cliente& getCliente() const = 0;
+	virtual const Cliente& getCliente() const;
 	virtual const std::vector<Movimentacao> getMovimentacoes();
 	virtual int getNumConta() const;
 	//static int getProximoNumConta();
@@ -39,7 +39,7 @@ public:
 	virtual void setCliente(Cliente *newCliente);
 
 	//methods
-	virtual bool debitar(double valor, std::string descricao);
+	virtual bool debitar(double valor, std::string descricao) = 0;
 	virtual void creditar(double valor, std::string descricao);
 	virtual vector<Movimentacao> obterExtrato(std::string dataIni, std::string dataFim);
 	virtual vector<Movimentacao> obterExtrato(std::string dataIni);

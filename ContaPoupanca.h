@@ -10,6 +10,7 @@
 
 #include "Conta.h"
 #include "Cliente.h"
+#include "Erro.h"
 
 class ContaPoupanca: public Conta {
 public:
@@ -18,22 +19,23 @@ public:
 	ContaPoupanca(const ContaPoupanca &other);
 
 	bool debitar(double valor, std::string descricao) override;
-
-	//getters and setters
-	const Cliente& getCliente() const override;
-	const std::vector<Movimentacao> getMovimentacoes() override;
-	int getNumConta() const override;
-	//static int getProximoNumConta();
-	double getSaldo() const override;
-
-	//Seta o ponteiro pro cliente
-	void setCliente(Cliente *newCliente) override;
-
 	//methods
 	void creditar(double valor, std::string descricao) override;
-	vector<Movimentacao> obterExtrato(std::string dataIni, std::string dataFim) override;
-	vector<Movimentacao> obterExtrato(std::string dataIni) override;
-	vector<Movimentacao> obterExtratoMesAtual() override;
+
+	////getters and setters
+	//const Cliente& getCliente() const override;
+	//const std::vector<Movimentacao> getMovimentacoes() override;
+	//int getNumConta() const override;
+	////static int getProximoNumConta();
+	//double getSaldo() const override;
+
+	////Seta o ponteiro pro cliente
+	//void setCliente(Cliente *newCliente) override;
+
+
+	//vector<Movimentacao> obterExtrato(std::string dataIni, std::string dataFim) override;
+	//vector<Movimentacao> obterExtrato(std::string dataIni) override;
+	//vector<Movimentacao> obterExtratoMesAtual() override;
 };
 
 #endif /* CONTAPOUPANCA_H_ */

@@ -157,6 +157,7 @@ void Interface::cadastrarCliente(){
 }
 
 void Interface::criarConta(){
+	try{
     std::cout<< "\n--------- CRIAR CONTA ----------" << endl;
 
 	//poupanca ou corrente?
@@ -179,7 +180,7 @@ void Interface::criarConta(){
 
 	//limite da conta
 	std::string limiteStr;
-	double limite;
+	double limite = 0;
 
 	if (tipo == "C") {
 		std::cout<<"Insira valor do limite da conta: ";
@@ -210,7 +211,7 @@ void Interface::criarConta(){
 
 	//for para percorrer o list de cliente e saber se o cpf/cnpj digitado e valido
 	for (auto i : this->banco.clientesLista()) {
-		if (cpf_cnpj.compare(i.getCpfCnpj()) == 0) {
+		if (cpf_cnpj == i.getCpfCnpj()) {
 			found = true;
 			//chama a funcao pra criar a conta
 			this->banco.criarConta(cpf_cnpj, tipo, limite);
@@ -219,12 +220,14 @@ void Interface::criarConta(){
 
 	//if para disparar a mensagem pro usuário da execucao da funcao
 	if (found == false) {
-		std::cout<<"\nCPF/CNPJ nao encontrado. Não foi possível criar a conta."<< endl;
+		throw Erro("CPF/CNPJ nao encontrado. Não foi possível criar a conta.");
 	} else {
 	    std::cout << "\nConta criada com sucesso." << endl;
 	}
-
-
+}
+	catch (Erro & e) {
+		std::cout << e.what() << std::endl;
+	}
 }
 
 void Interface::excluirCliente(){

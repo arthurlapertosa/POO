@@ -5,6 +5,7 @@
 #include <list>
 #include <fstream>
 #include "ContaCorrente.h"
+#include "Erro.h"
 
 using namespace std;
 
