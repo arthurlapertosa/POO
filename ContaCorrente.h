@@ -15,6 +15,7 @@ class ContaCorrente: public Conta {
 protected:
 	double limiteCredito;
 public:
+	ContaCorrente();
 	ContaCorrente(Cliente * clienteNovo, double limiteCredito);
 	virtual ~ContaCorrente();
 
@@ -23,6 +24,18 @@ public:
 	bool debitar(double valor, std::string descricao) override;
 	//methods
 	void creditar(double valor, std::string descricao) override;
+
+	//Write the member variables to stream objects
+	friend std::ostream& operator << (std::ostream& out, const ContaCorrente& obj);
+
+	//Read data from stream object and fill it in member variables
+	friend std::istream& operator >> (std::istream& in, ContaCorrente& obj);
+
+	string type() const override;
+
+	virtual void write(std::ostream& out) const override;
+
+	virtual void read(std::istream& in) override;
 
 	////getters and setters
 	//const Cliente& getCliente() const override;

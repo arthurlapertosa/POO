@@ -119,7 +119,7 @@ void Interface::printarContas() {
 	std:: cout << "\nLista de Contas" << endl;
 	for (long unsigned int i = 0; i < banco.contasLista().size(); i++) {
 		std::cout <<"Numero da conta: " << banco.contasLista()[i]->getNumConta() << ", Saldo: " << banco.contasLista()[i]->getSaldo() << ", CPF do titular: " << banco.contasLista()[i]->getCliente().getCpfCnpj()
-				<< ", Nome do titular: " << banco.contasLista()[i]->getCliente().getNomeCliente() << std::endl;
+				<< ", Nome do titular: " << banco.contasLista()[i]->getCliente().getNomeCliente() << ", Tipo da conta: " << banco.contasLista()[i]->type() << std::endl;
 	}
 }
 
@@ -584,10 +584,10 @@ void Interface::obterExtrato() {
 				cin >> dataIniStr;
 				cin.ignore();
 
-				if (strptime(dataIniStr.c_str(), "%d/%m/%Y", &result) == NULL) {
-					std::cout << "\nData inválida. " << endl;
-					return;
-				}
+				//if (strptime(dataIniStr.c_str(), "%d/%m/%Y", &result) == NULL) {
+				//	std::cout << "\nData inválida. " << endl;
+				//	return;
+				//}
 
 				extrato = this->banco.obterExtrato(dataIniStr, numConta);
 
@@ -600,19 +600,19 @@ void Interface::obterExtrato() {
 				cin >> dataIniStr;
 				cin.ignore();
 
-				if (strptime(dataIniStr.c_str(), "%d/%m/%Y", &result) == NULL) {
-					std::cout << "\nData inválida. " << endl;
-					return;
-				}
+				//if (strptime(dataIniStr.c_str(), "%d/%m/%Y", &result) == NULL) {
+				//	std::cout << "\nData inválida. " << endl;
+				//	return;
+				//}
 
 				std::cout<<"Insira a data final (formato dd/mm/yyyy): ";
 				cin >> dataFimStr;
 				cin.ignore();
 
-				if (strptime(dataIniStr.c_str(), "%d/%m/%Y", &result) == NULL) {
-					std::cout << "\nData inválida. " << endl;
-					return;
-				}
+				//if (strptime(dataIniStr.c_str(), "%d/%m/%Y", &result) == NULL) {
+				//	std::cout << "\nData inválida. " << endl;
+				//	return;
+				//}
 
 			    std::cout<< "\n--------- EXTRATO PERÍODO PASSADO ---------" << endl;
 

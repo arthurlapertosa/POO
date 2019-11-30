@@ -45,11 +45,12 @@ public:
 	virtual vector<Movimentacao> obterExtrato(std::string dataIni);
 	virtual vector<Movimentacao> obterExtratoMesAtual();
 
-//	//Write the member variables to stream objects
-//	virtual friend std::ostream& operator << (std::ostream& out, const Conta& obj);
-//
-//	//Read data from stream object and fill it in member variables
-//	virtual friend std::istream& operator >> (std::istream& in, Conta& obj);
+	virtual void write(std::ostream& out) const = 0;
+
+	virtual void read(std::istream& in) = 0;
+
+	//Qual o tipo da conta
+	virtual string type() const = 0;
 };
 
 #endif /* CONTA_H_ */
