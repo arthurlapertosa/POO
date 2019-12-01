@@ -56,6 +56,7 @@ double Movimentacao::getValor() const {
 	return valor;
 }
 
+
 std::ostream& operator<<(std::ostream& out, const Movimentacao& obj)
 {
 	out << obj.dataMov << "\n" << obj.descricao << "\n" << obj.debitoCredito << "\n" << obj.valor << std::endl;

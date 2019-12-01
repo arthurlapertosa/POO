@@ -40,7 +40,7 @@ public:
 
 	//methods
 	virtual bool debitar(double valor, std::string descricao) = 0;
-	virtual void creditar(double valor, std::string descricao);
+	virtual void creditar(double valor, std::string descricao) = 0;
 	virtual vector<Movimentacao> obterExtrato(std::string dataIni, std::string dataFim);
 	virtual vector<Movimentacao> obterExtrato(std::string dataIni);
 	virtual vector<Movimentacao> obterExtratoMesAtual();

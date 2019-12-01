@@ -90,7 +90,6 @@ void Banco::depositoConta(int numConta, double valor) {
 	for (long unsigned int i = 0; i < contas.size(); i++) {
 		if (contas[i]->getNumConta() == numConta) { //Achou a conta
 			contas[i]->creditar(valor, "Deposito");
-			break;
 		}
 	}
 }
@@ -100,9 +99,11 @@ bool Banco::saqueConta(int numConta, double valor) {
 	//Passa por todas as contas
 	for (long unsigned int i = 0; i < contas.size(); i++) {
 		if (contas[i]->getNumConta() == numConta) { //Achou a conta
+
 			if (contas[i]->debitar(valor, "Saque")) {
 				saqueRealizado = true;
 			}
+
 			break;
 		}
 	}
@@ -118,9 +119,13 @@ bool Banco::transferencia(int numContaOrigem, int numContaDestino, double valor)
 		if (contas[i]->getNumConta() == numContaOrigem) { //Achou a conta
 			for (long unsigned int j = 0; j < contas.size(); j++) {
 				if (contas[j]->getNumConta() == numContaDestino) {
-					if (contas[i]->debitar(valor, "Transferencia (Origem)")) {
-						contas[j]->creditar(valor, "Transferencia (Destino)");
-						transferenciaRealizada = true;
+					try {
+						if (contas[i]->debitar(valor, "Transferencia (Origem)")) {
+							contas[j]->creditar(valor, "Transferencia (Destino)");
+							transferenciaRealizada = true;
+						}
+					} catch (Erro &e) {
+						cout << e.what() << endl;
 					}
 					break;
 
@@ -256,14 +261,12 @@ std::istream& operator>>(std::istream& in, Banco& obj)
 	in >> numContas;
 	for (int i = 0; i < numContas; i++) {
 		in >> tipo;
+
 		Conta* nova;
-		if (tipo == "C")
-		{
+		if (tipo == "C") {
 			nova = new ContaCorrente;
 
-		}
-		else
-		{
+		} else {
 			nova = new ContaPoupanca;
 		}
 

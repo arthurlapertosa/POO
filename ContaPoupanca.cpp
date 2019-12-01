@@ -38,7 +38,8 @@ void ContaPoupanca::read(std::istream& in)
 std::ostream& operator<<(std::ostream& out, const ContaPoupanca& obj)
 {
 	//Escreve o tipo da conta
-	out << "C" << "\n";
+	out << "P" << "\n";
+
 	out << obj.numConta << "\n" << obj.saldo << "\n" << *obj.cliente << "\n" << obj.proximoNumConta << "\n" << obj.movimentacoes.size() << "\n";
 	for (int i = 0; i < obj.movimentacoes.size(); i++) {
 		out << obj.movimentacoes[i];
@@ -67,74 +68,19 @@ std::istream& operator>>(std::istream& in, ContaPoupanca& obj) {
 }
 
 
-bool ContaPoupanca::debitar(double valor, std::string descricao)
-{
+bool ContaPoupanca::debitar(double valor, std::string descricao) {
 	bool transacaorealizada = false;
 	char debitoCredito = 'D';
 	Movimentacao* mov = new Movimentacao(descricao, debitoCredito, valor);
 
+	this->movimentacoes.push_back(*mov);
 
-
-    if (this->saldo  >= valor) //checa se possui saldo suficiente para fazer a movimentação de débito
-    {
-        this->saldo = this->saldo - valor;
-        this->movimentacoes.push_back(*mov);
-        transacaorealizada = true;
-
-        time_t now = time(0);
-        tm *ltm = localtime(&now);
-        int hoje = ltm->tm_mday;//data do dia em que a transação é realizada;
-
-        if (hoje > 28)
-        {
-            //débitos realizados nos dias 29, 30 e 31 são contabilizados no dia 28.
-            hoje = 28;
-        }
-
-        double debitar = valor;
-        //enquanto ainda houver valor a ser debitado
-        while (debitar>0)
-        {
-            // percorre o vetor de dias base e calcula a diferença de dias entre a dia atual e cada dia base existente
-            double dif[saldoDiaB.size()];
-            for (std::size_t i=0; i<this->saldoDiaB.size(); i++)
-            {
-                if (this->saldoDiaB[i].getDiaBase() > hoje)
-                    dif[i] = hoje + (28 - this->saldoDiaB[i].getDiaBase());
-                else
-                    dif[i] = hoje - this->saldoDiaB[i].getDiaBase();
-            }
-
-            //procura o dia Base mais próximo;
-            size_t menor = -1;
-            for (std::size_t i=0; i<this->saldoDiaB.size(); i++)
-            {
-                for (std::size_t j=0; j<this->saldoDiaB.size(); i++)
-                {
-
-                    if (dif[i]<dif[j])
-                        menor = i;
-                }
-            }
-            //se saldo do dia base anterior mais próximo for maior que o valor a ser debitado, debita o valor.
-            if (this->saldoDiaB[menor].getSaldoDiaBase() > debitar){
-            	this->saldoDiaB[menor].setSaldoDiaBase(this->saldoDiaB[menor].getSaldoDiaBase() - debitar);
-
-            } else {
-            //se o saldodo dia base anterior mais próximo for menor que o valor a ser debitado, exclui o dia base e diminui o valor
-            //a ser debitado de acordo com o saldo do dia base
-
-                debitar = debitar - this->saldoDiaB[menor].getSaldoDiaBase();
-                this->removeElemento(menor);
-            }
-
-        }
-	}
-	else {
+	if (this->saldo >= valor) {
+		this-> saldo -= valor;
+		transacaorealizada = true;
+	} else {
 		throw Erro("Saldo insuficiente");
 	}
-
-	delete mov;
 
 	return transacaorealizada;
 }
@@ -148,34 +94,31 @@ void ContaPoupanca::adicionaElemento(SaldoDiaBase & elemento) {
 	this->saldoDiaB.push_back(elemento);
 }
 
-void ContaPoupanca::creditar(double valor, std::string descricao)
-{
+void ContaPoupanca::creditar(double valor, std::string descricao) {
 
-	char debitoCredito = 'C';
-	Movimentacao* mov = new Movimentacao(descricao, debitoCredito, valor);
+	Movimentacao* mov = new Movimentacao(descricao, 'C', valor);
+
+	this->saldo += valor;
+    this->movimentacoes.push_back(*mov);
 
 	time_t now = time(0);
     tm *ltm = localtime(&now);
     int hoje = ltm->tm_mday;//data do dia em que a transação é realizada;
 
-    if (hoje > 28)
-    {
-        //débitos realizados nos dias 29, 30 e 31 são contabilizados no dia 28.
-        hoje = 28;
+    if (hoje > 28) {
+    	hoje = 1;
     }
-	bool transacaorealizada = false;
-	for (size_t i=0; i<this->saldoDiaB.size(); i++) {
-        if (this->saldoDiaB[i].getDiaBase() == hoje) {
-            this->saldoDiaB[i].setSaldoDiaBase(this->saldoDiaB[i].getDiaBase() + valor);
-            transacaorealizada = true;
-            this->movimentacoes.push_back(*mov);
+    bool existe = false;
+	for (int i = 0; i < this->saldoDiaB.size(); i++) {
+        if (this->saldoDiaB[i].getDiaBase() == hoje && this->saldoDiaB[i].getSaldoDiaBase() == hoje ) {
+        	existe = true;
         }
     }
-    if (!transacaorealizada) {
-        SaldoDiaBase novo(hoje, valor);
+	if (!existe) {
+        SaldoDiaBase novo(1, valor);
         this->adicionaElemento(novo);
-        transacaorealizada = true;
-    }
+	}
+
 }
 
 //

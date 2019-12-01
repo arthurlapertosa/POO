@@ -46,9 +46,6 @@ bool ContaCorrente::debitar(double valor, std::string descricao) {
 	return transacaorealizada;
 }
 
-void ContaCorrente::creditar(double valor, std::string descricao)
-{
-}
 
 string ContaCorrente::type() const
 {
@@ -70,10 +67,11 @@ std::ostream& operator<<(std::ostream& out, const ContaCorrente& obj)
 {
 	//Escreve o tipo da conta
 	out << "C" << "\n";
-	out << obj.numConta << "\n" << obj.saldo << "\n" << *obj.cliente << "\n" << obj.proximoNumConta << "\n" << obj.movimentacoes.size() << "\n" << obj.limiteCredito << "\n";
+	out << obj.numConta << "\n" << obj.saldo << "\n" << *obj.cliente << "\n" << obj.proximoNumConta << "\n" << obj.movimentacoes.size() << "\n";
 	for (int i = 0; i < obj.movimentacoes.size(); i++) {
 		out << obj.movimentacoes[i];
 	}
+	out << obj.limiteCredito << "\n";
 	std::cout << std::endl;
 	return out;
 }
@@ -98,3 +96,15 @@ std::istream& operator>>(std::istream& in, ContaCorrente& obj)
 	return in;
 }
 
+
+void ContaCorrente::creditar(double valor, std::string descricao){
+	char debitoCredito = 'C';
+	Movimentacao * mov = new Movimentacao(descricao, debitoCredito, valor);
+
+	this->saldo = this->saldo + valor;
+
+	this->movimentacoes.push_back(* mov);
+
+	delete mov;
+
+}

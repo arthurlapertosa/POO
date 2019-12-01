@@ -398,12 +398,13 @@ void Interface::sacar() {
 		if (numConta == this->banco.contasLista()[i]->getNumConta()) {
 			found = true;
 			//verifica se o saldo e suficiente para fazer o saque
-			if (!this->banco.saqueConta(numConta, valor)) {
-				cout << "\nSaldo insuficiente." << endl;
-			} else {
-
-				cout << "\nSaque realizado com sucesso." << endl;
+			try{
+				this->banco.saqueConta(numConta, valor);
+			} catch (Erro &e) {
+				cout << e.what() << endl;
 			}
+		break;
+
 			break;
 		}
 	}

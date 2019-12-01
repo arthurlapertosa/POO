@@ -57,37 +57,6 @@ void Conta::setCliente(Cliente* newCliente)
 
 //methods
 
-bool Conta::debitar(double valor, std::string descricao) {
-	bool transacaorealizada = false;
-	char debitoCredito = 'D';
-	Movimentacao * mov = new Movimentacao(descricao, debitoCredito, valor);
-
-	if (this->saldo >= valor) {
-		this->saldo = this->saldo - valor;
-		this->movimentacoes.push_back(* mov);
-		transacaorealizada = true;
-	}
-
-	delete mov;
-
-	return transacaorealizada;
-
-}
-
-void Conta::creditar(double valor, std::string descricao){
-	char debitoCredito = 'C';
-	Movimentacao * mov = new Movimentacao(descricao, debitoCredito, valor);
-
-
-	this->saldo = this->saldo + valor;
-
-	this->movimentacoes.push_back(* mov);
-
-	delete mov;
-
-}
-
-
 vector<Movimentacao> Conta::obterExtrato(std::string dataIni, std::string dataFim) {
 	time_t seconds;
 	tm * curr_tm;
@@ -176,31 +145,4 @@ vector<Movimentacao> Conta::obterExtratoMesAtual() {
 
 	return *extrato;
 }
-//
-//std::ostream& operator << (std::ostream& out, const Conta& obj) {
-//	out << obj.numConta << "\n" << obj.saldo << "\n" << *obj.cliente << "\n" << obj.proximoNumConta << "\n" << obj.movimentacoes.size() << "\n";
-//	for (int i = 0; i < obj.movimentacoes.size(); i++) {
-//		out << obj.movimentacoes[i];
-//	}
-//	std::cout << std::endl;
-//
-//	return out;
-//}
-//
-//std::istream& operator >> (std::istream& in, Conta& obj) {
-//	in >> obj.numConta;
-//	in >> obj.saldo;
-//	Cliente* novo = new Cliente;
-//	in >> *novo;
-//	obj.cliente = novo;
-//	in >> obj.proximoNumConta;
-//	int size;
-//	in >> size;
-//	for (int i = 0; i < size; i++) {
-//		Movimentacao* aux = new Movimentacao();
-//		in >> *aux;
-//		obj.movimentacoes.push_back(*aux);
-//		delete aux;
-//	}
-//	return in;
-//}
+

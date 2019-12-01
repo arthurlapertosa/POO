@@ -35,6 +35,7 @@ public:
 	void cobrarCPMF();
 	void obterSaldo();
 	void obterExtrato();
+	void cadastrarDiaBase();
 	virtual ~Interface();
 };
 
