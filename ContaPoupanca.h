@@ -27,6 +27,7 @@ public:
 
 	void adicionaElemento(SaldoDiaBase &novo );
 	void removeElemento(int elemento);
+	vector<SaldoDiaBase> getSaldoDiaBase();
 
 	//Write the member variables to stream objects
 	friend std::ostream& operator << (std::ostream& out, const ContaPoupanca& obj);

@@ -7,7 +7,7 @@
 
 #include "Movimentacao.h"
 
-Movimentacao::Movimentacao()
+Movimentacao::Movimentacao() // @suppress("Class members should be properly initialized")
 {
 	descricao = "";
 	debitoCredito = 'n';

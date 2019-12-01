@@ -4,6 +4,7 @@
 #include <iostream>
 class SaldoDiaBase
 {
+protected:
 	int diaBase;
 	double saldoDiaBase;
 

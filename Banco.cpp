@@ -1,6 +1,7 @@
 #include "Banco.h"
 #include "ContaCorrente.h"
 #include "ContaPoupanca.h"
+#include "SaldoDiaBase.h"
 
 Banco::Banco() {
 
@@ -284,4 +285,12 @@ std::istream& operator>>(std::istream& in, Banco& obj)
 		obj.contas.push_back(nova);
 	}
 	return in;
+}
+
+void Banco::cadastrarDiaBase(int numConta, SaldoDiaBase &db) {
+	for (long unsigned int i = 0; i < contas.size(); i++) {
+		if (contas[i]->getNumConta() == numConta) { //Achou a conta
+				contas[i]->adicionaElemento(db);
+		}
+	}
 }

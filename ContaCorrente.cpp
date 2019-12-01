@@ -7,6 +7,7 @@
 
 #include "ContaCorrente.h"
 #include "Cliente.h"
+#include "SaldoDiaBase.h"
 #include "Erro.h"
 
 ContaCorrente::ContaCorrente() : Conta()
@@ -25,6 +26,15 @@ ContaCorrente::~ContaCorrente() {
 double ContaCorrente::getLimiteCredito()
 {
 	return this->limiteCredito;
+}
+
+void ContaCorrente::removeElemento(int elemento) {
+
+
+}
+
+void ContaCorrente::adicionaElemento(SaldoDiaBase &sb) {
+
 }
 
 
@@ -71,7 +81,7 @@ std::ostream& operator<<(std::ostream& out, const ContaCorrente& obj)
 	for (int i = 0; i < obj.movimentacoes.size(); i++) {
 		out << obj.movimentacoes[i];
 	}
-	out << obj.limiteCredito << "\n";
+	out << "\n" << obj.limiteCredito;
 	std::cout << std::endl;
 	return out;
 }

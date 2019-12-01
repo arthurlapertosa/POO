@@ -6,6 +6,7 @@
 #include <fstream>
 #include "ContaCorrente.h"
 #include "ContaPoupanca.h"
+#include "SaldoDiaBase.h"
 #include "Erro.h"
 
 using namespace std;
@@ -54,6 +55,9 @@ public:
 	void cobrarTarifa();
 
 	void cobrarCPMF();
+
+
+	void cadastrarDiaBase(int numConta, SaldoDiaBase &db);
 
 	//Retorna o saldo de uma conta
 	double obterSaldo (int numConta);

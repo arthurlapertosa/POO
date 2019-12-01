@@ -36,6 +36,7 @@ public:
 	void obterSaldo();
 	void obterExtrato();
 	void cadastrarDiaBase();
+	void listarDiaBase();
 	virtual ~Interface();
 };
 

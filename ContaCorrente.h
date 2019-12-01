@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include "Conta.h"
+#include "SaldoDiaBase.h"
 
 class ContaCorrente: public Conta {
 protected:
@@ -36,6 +37,11 @@ public:
 	virtual void write(std::ostream& out) const override;
 
 	virtual void read(std::istream& in) override;
+
+	void removeElemento(int elemento);
+
+	void adicionaElemento(SaldoDiaBase &db);
+
 
 	////getters and setters
 	//const Cliente& getCliente() const override;

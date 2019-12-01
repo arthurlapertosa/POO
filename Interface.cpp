@@ -47,13 +47,15 @@ void Interface::menu(){
 		std::cout << "11. Obter extrato" << endl;
 		std::cout << "12. Listar clientes" << endl;
 		std::cout << "13. Listar contas" << endl;
-		std::cout << "14. Sair e salvar em arquivo" << endl;
+		std::cout << "14. Cadastrar dia base" << endl;
+		std::cout << "15. Listar dia base" << endl;
+		std::cout << "16. Sair e salvar em arquivo" << endl;
 
 		std::string stropcao = "0";
 		int opcao = 0;
 
 		while (opcao != 1 && opcao != 2 && opcao != 3 && opcao != 4 && opcao != 5 && opcao != 6 && opcao != 7
-				&& opcao != 8 && opcao != 9 && opcao != 10 && opcao != 11 && opcao != 12 && opcao != 13 && opcao != 14){
+				&& opcao != 8 && opcao != 9 && opcao != 10 && opcao != 11 && opcao != 12 && opcao != 13 && opcao != 14 && opcao != 15 && opcao != 16){
 			std::cout << "Escolha uma opção válida: ";
 
 			getline(cin, stropcao);
@@ -106,6 +108,12 @@ void Interface::menu(){
 				this->printarContas();
 				break;
 			case 14:
+				this->cadastrarDiaBase();
+				break;
+			case 15:
+				this->listarDiaBase();
+				break;
+			case 16:
 				this->banco.writeFile();
 				return;
 
@@ -665,4 +673,115 @@ void Interface::printarExtrato(vector<Movimentacao> extrato) {
 	}
 }
 
+void Interface::cadastrarDiaBase() {
+    std::cout<< "\n--------- Cadastrar Dia Base ----------" << endl;
+	this->printarContas();
+
+	//pega o numero da conta e faz tratamento de erro caso o usuario nao digite um numero valido
+	std::string numContaStr;
+	int numConta;
+	std::cout<<"\nInsira o número da conta para cadastrar dia base: ";
+	getline(cin, numContaStr);
+	try {
+		numConta = stoi(numContaStr);
+	} catch (...) {
+		std::cout<<"Número da conta inválido." << endl;
+		return;
+	}
+
+	bool found = false;
+
+	//for para percorrer o vector de conta e saber se o num da conta digitado e valido
+	for(std::size_t i=0; i< this->banco.contasLista().size(); i++) {
+		if (numConta == this->banco.contasLista()[i]->getNumConta()) {
+			if (this->banco.contasLista()[i]->type() == "P") {
+				found = true;
+
+				SaldoDiaBase *db = new SaldoDiaBase();
+				string saldoStr, diaStr;
+				double saldo;
+				int dia;
+
+				std::cout<<"Insira o saldo do dia base: ";
+				getline(cin, saldoStr);
+				//substitui virgula por ponto quando necessário
+				std::replace(saldoStr.begin(), saldoStr.end(), ',', '.' );
+				try {
+					saldo = stod(saldoStr);
+					if (saldo<=0) {
+						std::cout<<"Valor inválido." << endl;
+						return;
+					}
+				} catch (...) {
+					std::cout<<"Valor inválido." << endl;
+					return;
+				}
+
+				std::cout<<"Insira o dia base: ";
+				getline(cin, diaStr);
+				//substitui virgula por ponto quando necessário
+				try {
+					dia = stod(diaStr);
+					if (dia < 1 || dia > 31) {
+						std::cout<<"Valor inválido." << endl;
+						return;
+					}
+				} catch (...) {
+					std::cout<<"Valor inválido." << endl;
+					return;
+				}
+				db->setDiaBase(dia);
+				db->setSaldoDiaBase(saldo);
+				this->banco.cadastrarDiaBase(numConta, *db);
+			} else {
+				cout << "Nao e possivel criar dia base em conta corrente" <<endl;
+			}
+		}
+	}
+
+	//if para disparar a mensagem pro usuário da execucao da funcao
+	if (!found) {
+		std::cout<<"Numero da conta nao encontrado. "<< endl;
+	}
+}
+
+void Interface::listarDiaBase() {
+    std::cout<< "\n--------- Listar Dia Base ----------" << endl;
+	this->printarContas();
+
+	//pega o numero da conta e faz tratamento de erro caso o usuario nao digite um numero valido
+	std::string numContaStr;
+	int numConta;
+	std::cout<<"\nInsira o número da conta para listar dia base: ";
+	getline(cin, numContaStr);
+	try {
+		numConta = stoi(numContaStr);
+	} catch (...) {
+		std::cout<<"Número da conta inválido." << endl;
+		return;
+	}
+
+	bool found = false;
+
+	//for para percorrer o vector de conta e saber se o num da conta digitado e valido
+	for(std::size_t i=0; i< this->banco.contasLista().size(); i++) {
+			if (numConta == this->banco.contasLista()[i]->getNumConta()) {
+				if (this->banco.contasLista()[i]->type() == "P") {
+					found = true;
+					ContaPoupanca * cp;
+					cp = (ContaPoupanca *) this->banco.contasLista()[i];
+					std::cout<<"Dia Saldo" << endl;
+					for(std::size_t i=0; i< cp->getSaldoDiaBase().size(); i++) {
+						std::cout<< cp->getSaldoDiaBase()[i].getDiaBase() << " " <<  cp->getSaldoDiaBase()[i].getSaldoDiaBase() << endl;
+					}
+				}
+
+			}
+	}
+
+	//if para disparar a mensagem pro usuário da execucao da funcao
+	if (!found) {
+		std::cout<<"Numero da conta nao encontrado. "<< endl;
+	}
+}
 

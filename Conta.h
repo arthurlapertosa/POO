@@ -10,6 +10,7 @@
 
 #include "Cliente.h"
 #include "Movimentacao.h"
+#include "SaldoDiaBase.h"
 #include <vector>
 
 class Conta {
@@ -46,6 +47,9 @@ public:
 	virtual vector<Movimentacao> obterExtratoMesAtual();
 
 	virtual void write(std::ostream& out) const = 0;
+
+	virtual void removeElemento(int elemento) = 0 ;
+	virtual void adicionaElemento(SaldoDiaBase &db) = 0;
 
 	virtual void read(std::istream& in) = 0;
 

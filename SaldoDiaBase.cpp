@@ -29,4 +29,3 @@ void SaldoDiaBase::setDiaBase(int diaBase) {
 void SaldoDiaBase::setSaldoDiaBase(double saldoDiaBase) {
 	this->saldoDiaBase = saldoDiaBase;
 }
-

@@ -35,16 +35,26 @@ void ContaPoupanca::read(std::istream& in)
 	in >> *this;
 }
 
+
+vector<SaldoDiaBase> ContaPoupanca::getSaldoDiaBase() {
+	return this->saldoDiaB;
+
+}
+
 std::ostream& operator<<(std::ostream& out, const ContaPoupanca& obj)
 {
 	//Escreve o tipo da conta
 	out << "P" << "\n";
 
-	out << obj.numConta << "\n" << obj.saldo << "\n" << *obj.cliente << "\n" << obj.proximoNumConta << "\n" << obj.movimentacoes.size() << "\n";
+	out << obj.numConta << "\n" << obj.saldo << "\n" << *obj.cliente << "\n" << obj.proximoNumConta << "\n" << obj.movimentacoes.size()<< endl;
 	for (int i = 0; i < obj.movimentacoes.size(); i++) {
 		out << obj.movimentacoes[i];
 	}
-	std::cout << std::endl;
+	out << obj.saldoDiaB.size() << std::endl;
+	for (int i = 0; i < obj.saldoDiaB.size(); i++) {
+		out << obj.saldoDiaB[i];
+	}
+	out << std::endl;
 	return out;
 }
 
@@ -55,7 +65,7 @@ std::istream& operator>>(std::istream& in, ContaPoupanca& obj) {
 	in >> *novo;
 	obj.cliente = novo;
 	in >> obj.proximoNumConta;
-	int size;
+	int size, size1;
 	in >> size;
 	for (int i = 0; i < size; i++) {
 		Movimentacao* aux = new Movimentacao();
@@ -63,7 +73,15 @@ std::istream& operator>>(std::istream& in, ContaPoupanca& obj) {
 		obj.movimentacoes.push_back(*aux);
 		delete aux;
 	}
-	//in >> obj.limiteCredito;
+
+	in >> size1;
+	for (int i = 0; i < size1; i++) {
+		SaldoDiaBase* aux = new SaldoDiaBase();
+		in >> *aux;
+		obj.saldoDiaB.push_back(*aux);
+		delete aux;
+	}
+
 	return in;
 }
 
@@ -121,45 +139,6 @@ void ContaPoupanca::creditar(double valor, std::string descricao) {
 
 }
 
-//
-//const Cliente& ContaPoupanca::getCliente() const
-//{
-//	return *cliente;
-//}
-//
-//const std::vector<Movimentacao> ContaPoupanca::getMovimentacoes()
-//{
-//	return std::vector<Movimentacao>();
-//}
-//
-//int ContaPoupanca::getNumConta() const
-//{
-//	return 0;
-//}
-//
-//double ContaPoupanca::getSaldo() const
-//{
-//	return 0.0;
-//}
-//
-//void ContaPoupanca::setCliente(Cliente* newCliente)
-//{
-//}
-//
-//vector<Movimentacao> ContaPoupanca::obterExtrato(std::string dataIni, std::string dataFim)
-//{
-//	return vector<Movimentacao>();
-//}
-//
-//vector<Movimentacao> ContaPoupanca::obterExtrato(std::string dataIni)
-//{
-//	return vector<Movimentacao>();
-//}
-//
-//vector<Movimentacao> ContaPoupanca::obterExtratoMesAtual()
-//{
-//	return vector<Movimentacao>();
-//}
-//
+
 
 
